@@ -1,0 +1,16 @@
+Script started on Thu Jan 31 13:57:16 2002
+Olympus1:/home/md81423>a.out]
+sh: a.out]:  not found
+Olympus1:/home/md81423>a.out
+Please enter an integer:
+22
+
+
+The result of multiplying multiplicand by 7 and subtracting 2 is:26.699999
+The result of multiplying your integer by 7 and	subtracting 2 is:26
+
+The result you obtain when you increment the double and	divide the incremented result by the float is:2.000000
+
+Olympus1:/home/md81423>exit
+
+script done on Thu Jan 31 13:57:44 2002

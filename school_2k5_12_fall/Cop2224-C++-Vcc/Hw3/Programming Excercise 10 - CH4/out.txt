@@ -1,0 +1,6 @@
+Account #           Account Type     Current Balance     Message                                           
+3280853             S                84                  Fee Charged:                                      $10.00
+3423089             S                2700                Interest Earned:                                  108
+0980833             C                332                 Fee Charged:                                      $25.00
+0932885             C                3333                Interest Earned:                                  99.99
+3287923             C                7833                Interest Earned:                                  391.65

@@ -1,0 +1,82 @@
+Project three will require two files as the last project did.  
+
+The first file should be called BigNumber.java and the other file should be
+called HW3.java
+
+NOTE AS IN THE LAST PROJECT ALL FIELDS IN BigNumber.java MUST BE PRIVATE
+
+This program will involve doing arithemetic with numbers that are bigger 
+than long or double.  So you will have to make a class which can work with
+big numbers.  Your job is to write this class and methods which can 
+add, subtract, and multiply big numbers.  Also, you should write routines
+that allow you to compare two big numbers(this will be needed for factorial).
+Now for our purposes you can assume that the numbers will have fewer than
+1000 digits, though this information you really don't need to know, and
+ideally you should not use this information, but if you need it there it is. 
+
+There are two ways to store the big numbers.  Either as a string or 
+as an array of integers.  Both have their pros and cons, so you must decide
+which you'd like to do.   
+You should try to use the multiply for factorial and use the add to help with
+the multiply.  However, you cannot do the trivial multiply, which simply
+uses add solely.  Of course, if you can only figure out the trivial multiply
+then you can do it, but points will be taken off.
+
+There will be one command line parameter.  This parameter will be the size
+of the big number array.  This array should be declared in HW3 and I have a
+more complete description of this array below.
+
+As usual you will read commands from the standard input.  The commands are as
+follows:
+
+add N1 N2
+you should add these two numbers and store the result in the big number array.
+See below for the description of the big number array.
+
+subtract N1 N2
+this should do N1-N2 and store the result in the big number array.  You can
+assume that N1>=N2, so essentially there will be no dealing with negative
+numbers.
+
+multiply N1 N2 should multiply these two numbers together and store the result
+in the big number array.  Note there is a trivial multiply, which you should 
+not use.  You should not do the multiply which uses only addition.   
+
+factorial N1 should compute N1! and store the result in the big number array.
+
+print i
+this should print the big number in the ith position in the big number array.
+You can assume that this index will be valid.
+
+find N1
+this command should look through the big number array and print on one line all the array indices
+which have a big number equal to the number N1.
+
+quit
+when quit appears then your program should simply exit.
+
+Here is the big number array description.  In each computation you do not 
+print the result to the screen.  In each computation you perform you should store the 
+result in the big number array.  So you don't output the result of add N1 N2.
+You store the result in the current position in the array.  So if the first
+commands are:
+add 10 20
+subtract 40 20
+factorial 5
+
+for each computation you should store the results in the big number array, thus
+position 0 will have the BigNumber 30, position 1 will have the BigNumber 20,
+position 2 will have the BigNumber 120.  Now if the next commands are:
+print 0
+print 2 then you should output the BigNumbers at these positions so the output
+would be something like
+30
+120
+
+Of course these numbers are small, and i may test your programs with much
+bigger numbers.  Like:
+add 9943344522233433334998885776633112003444555999344 32333499553535343242323432243089098132213432432143124434241432
+
+This big number array should be declared in HW3.  There will be one command line
+parameter entered, and this command is the size that you should make the 
+big number array.  I will not overflow this array.  

@@ -1,0 +1,38 @@
+There have been a number of small changes you should note.
+
+(1)  Method IOMgr::pushToMargin(ofstream& fout, int delta) throw(IOError);
+     In the Lab1 specification document, the description of this method was
+     incorrect - this has been fixed.  This method is supposed to combine
+     the functions of pushMargin() and deltaMargin().
+
+(2a)  Method IOMgr::deltaMargin(ofstream& fout, int delta) throw(IOError);
+     The "throw( IOError )" was missing from its declaration in the header
+     file.  Fix that, or download the updated header file.
+
+(2b)  Method IOMgr::deltaMargin(ifstream& fout, int delta) throw(IOError);
+      This is a new method - its specification has been added to the Lab1
+      specification document.  Basically it does for input streams what
+      its overloaded copy does for output streams.  However, the semantics
+      are somewhat different.  The primary purpose of this method is to
+      provide a pushback or putback capability for parsing input streams.
+      This method is necessary to handle pushback if a Tokenizer or
+      StringTokenizer is not used to parse an input stream. 
+
+(3)  Methods NextChar() and IsDelim() were defined in class Tokenizer as
+     private methods and were also included in the class declaration for 
+     StringTokenizer.  However, there was no specification for these 
+     methods in the Lab1 spec. document.  You may or may not need them in
+     StringTokenizer.  If you decide they would be helpful in the implementation
+     of StringTokenizer, then go ahead and use them, but they may need to be
+     modified.  
+
+(4)  Method StringTokenizer::Catbuff(string astr); was omitted from the header
+     file - this has been fixed.  Make the change in your header file or download
+     a new one.
+
+(5)  Classes Agent, Instructor, and Student class interface specs have been changed.
+     (a)  Extract, Insert must be public virtual methods in all three classes.
+     (b)  Get and Put must be protected virtual methods in all three classes.
+     (c)  operator<< and operator>> should be declared only in class Agent.
+
+ 

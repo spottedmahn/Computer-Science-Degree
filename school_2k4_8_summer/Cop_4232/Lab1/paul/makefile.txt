@@ -1,0 +1,20 @@
+lab_1::lab1.o agent.o Instructor.o Student.o IOMgmt.o apperrors.o
+	g++ -o lab_1 lab1.o agent.o Instructor.o Student.o IOMgmt.o apperrors.o
+
+agent.o: agent.cpp Agent.h
+	g++ -c agent.cpp
+
+Instructor.o: Instructor.cpp Instructor.h 
+	g++ -c Instructor.cpp
+
+Student.o: Student.cpp Student.h
+	g++ -c Student.cpp
+
+IOMgmt.o: IOMgmt.cpp IOMgmt.h
+	g++ -c IOMgmt.cpp
+
+apperrors.o: apperrors.cpp apperrors.h
+	g++ -c apperrors.cpp
+
+lab_1.o: lab1.cpp Student.h Instructor.h Agent.h IOMgmt.h
+	g++ -c lab1.cpp

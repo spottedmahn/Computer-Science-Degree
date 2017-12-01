@@ -1,0 +1,23 @@
+!226;s
+A
+SAU0
+SCU0
+S+U0
+SJU0CLASSPATH+=.%PATH_SEP\012CLASSPATH=+%PATH_SEP%EXTENSION_PATH%SEPclasses%SEPuser%PATH_SEP%EXTENSION_PATH%SEPclasses%SEPsystem\012PATH=+%PATH_SEP%JAVA_BIN_DIR
+SJT0%<PROJECT_PATH>\\mainProject.java
+SOU0
+SPU0
+!267;f
+%	m3uCreator.java
+%	convert_to_car_htm.java
+%	createDirectoryList.java
+%	SimpleJewelCopy.java
+%	sortStrings.java
+%	TitCreator.java
+%	tableData.java
+%	albumsAllCreator.java
+%	asxCreator.java
+%	mainProject.java
+%	plsCreator.java
+%	sortTableRows.java
+%	Synchronize.java

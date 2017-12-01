@@ -1,0 +1,34 @@
+Write a GUI calculator program. Note that the GUI must be a java swing GUI. 
+You should make a simple calculator that can add, subtract, multiply, and 
+compute factorial. You should use your BigNumber class as the underlying data 
+type of the integers. If your BigNumber class is not working, then you can use 
+the int data type, but you will receive points off for doing this. If your big 
+number works partially, then use the BigNumber class for what works and then 
+use ints for what doesn't work. The calculator must have the digits as buttons 
+to enter the numbers. You do not need to write code to allow the user to enter 
+a number using the keyboard. You only need to allow the user to enter a number 
+using the buttons you provide. You should provide the following functionality. 
+First the calculator should look reasonable. Make sure you make the answer 
+field allows the user to see the whole result number. You should make sure 
+that your window closes 
+when the user tries to close it in the standard way. Also suppose i enter a 
+number. Then i press the add button. Then i enter another number. I should be 
+able to press equals to get the result. However if i press add then you should 
+display the result and wait for the next number to add or multiply or whatever 
+else i push. You should also provide a clear button to clear the numbers. This 
+should allow me to start from scratch just as if the calculator had started 
+anew. You should not have separate fields for each number. You must be able to 
+use one text field for the input numbers and the output numbers. This requires 
+some extra thought. If I type 5 + 2 then I type equals. You should display 7. 
+Then I should be able to type equals again, which will add 2 
+to the current result. Thus 9 whould display in the text field. Similarly if i 
+push equals again 11 should display. I will not enter in a sequence of 
+commands like 5 + = However, I can enter in a sequence of commands like 5 = , 
+which should display 5 as the answer. It is like an operation that sets the 
+output to whatever was input. If i enter 5 + then I hit the clear, then if I 
+hit 7 equals it should not display 12, as the clear should clear everything. 
+Notice that the program is due on Monday, which is the last day of classes. 
+Our last day of class is in november, but the last day of classes for the 
+university in general is December 2, which is when all the programs are due. 
+However i have given you until early morning on the 3rd. This is the same as 
+the extra credit projects.

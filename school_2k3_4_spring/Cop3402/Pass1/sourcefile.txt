@@ -1,0 +1,19 @@
+DemO     START   0
+. THIS IS A COMMENT ON A SEPARATE LINE
+FIRST    STL     RETADR
+         LDB     LENGTH
+         ALI     0
+         JSUB    RDREC
+RETADR   RESW    1                 THIS IS AN INLINE COMMENT
+LENGTH   RESW    1
+RETADR   RESB    100
+BUFFER   RESB    4096
+BUFEND   EQU     *
+MAXLEN   EQU     4096
+.
+RDREC    CLEAR   X
+         LDB     RETADR
+         RSUB
+         END     FIRST
+
+

@@ -1,0 +1,4 @@
+Distance0=0
+Distance1=10
+Distance2=4
+Distance3=3

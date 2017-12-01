@@ -1,0 +1,17 @@
+I debugged my program using various inserts and deletes.
+
+some of my test cases:
+1)
+insert 10, 25, 15, 20
+delete 15
+
+2)
+insert 88, 45, 33
+delete 88, 33
+
+3)
+insert 55, 66, 77, 88, 44, 33
+delete 33, 77, 
+
+I used my result to determine that my program was running properly.  I don't know how else to
+discuss how I used my  testing results to help me debug.

@@ -1,0 +1,13 @@
+(B B H D A A)
+> ((O P) L M (J K))
+> (HELLO HELLO)
+> (ABC ABC)
+> (A B C C B A)
+> (H E L L O O L L E H)
+> (4 5 6)
+> ((9 8) (7))
+> (A B)
+> ((1 2) (3 4))
+> 8
+> 12
+> 

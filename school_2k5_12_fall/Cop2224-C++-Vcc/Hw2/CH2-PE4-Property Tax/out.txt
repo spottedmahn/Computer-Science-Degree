@@ -1,0 +1,4 @@
+Assessed Value:                          250000.00
+Taxalbe Amount:                          230000.00
+Tax Rate for each $100.00:                    1.05
+Property Tax:                             11500.00

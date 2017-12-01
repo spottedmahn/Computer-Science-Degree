@@ -1,0 +1,135 @@
+#include <stdio.h>
+#define LINUX /* define this if you are on linux   */
+//#define WIN32 /* define this if you are on windows */
+
+#ifdef WIN32
+#       include "io.h"
+#       include "winsock2.h"      /* WSAGetLastError, WSAStartUp  */
+#       define snprintf _snprintf
+#endif
+
+#ifdef LINUX
+#       include <netdb.h>         /* gethostbyname  */
+#       include <netinet/in.h>    /* htons          */
+#       include <sys/socket.h>
+#endif
+
+static void sendCommand(
+                const int  sock,
+                const char *str,
+                const char *arg  ) {
+    char buf[4096];
+
+    if (arg != NULL) {
+        snprintf(buf, sizeof(buf), str, arg);        
+		printf("SEND: "); printf(str,arg);
+    } else {
+        snprintf(buf, sizeof(buf), str);
+		printf("SEND: "); printf("%s\n",str);
+    }/*else*/
+    
+    send(sock, buf, strlen(buf), 0);    
+}
+
+static int recvReply(
+		const char sock,
+		const char *reply  ) {
+
+	char rbuff[4096];
+	int i;
+
+	i = recv ( sock, rbuff, 4095, 0);
+	if (i != -1) {
+		rbuff[i] = 0;
+		printf("(Looking For: %s) Received: %s\n",reply, rbuff);
+		if (strncmp(reply, rbuff, strlen(reply)) == 0)
+			return 1;
+		else
+			return 0;
+	} else {
+		printf("Receive Error!\n");
+		return 0;
+	}
+}
+
+
+static int sendmail(
+                const char *from,
+                const char *to,
+                const char *subject,
+                const char *body,
+                const char *server_hostname,
+                const char *client_hostname,
+                const int   port              ) {
+    struct hostent *host;   
+    struct sockaddr_in saddr_in;
+    int sock = 0;
+
+#ifdef WIN32
+	WSADATA wsaData;
+	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+		return -1;
+	}
+#endif
+
+        sock = socket(AF_INET, SOCK_STREAM, 0);
+	host = gethostbyname(server_hostname);
+	
+	saddr_in.sin_family      = AF_INET;
+	saddr_in.sin_port        = htons((u_short)port);
+	saddr_in.sin_addr.s_addr = 0;
+
+	memcpy((char*)&(saddr_in.sin_addr), host->h_addr, host->h_length);
+
+	if (connect(sock, (struct sockaddr*)&saddr_in, sizeof(saddr_in)) == -1) {
+		return -2;
+	}
+    
+	if (!recvReply(sock,"220")) goto err;
+           sendCommand(sock, "EHLO %s\n", client_hostname); // greeting
+	if (!recvReply(sock,"250")) goto err;
+           sendCommand(sock, "MAIL FROM: %s\n", from);    // from
+	if (!recvReply(sock,"250")) goto err;
+           sendCommand(sock, "RCPT TO: %s\n",   to);      // to
+	if (!recvReply(sock,"250")) goto err;
+           sendCommand(sock, "DATA\n",          NULL);    // begin data
+	if (!recvReply(sock,"354")) goto err;
+
+        // next comes mail headers
+        sendCommand(sock, "From: %s\n",      from);
+        sendCommand(sock, "To: %s\n",        to);
+        sendCommand(sock, "Subject: %s\n",   subject);
+        sendCommand(sock, "\n",              NULL);
+        sendCommand(sock, "%s\n",            body);    // data
+        sendCommand(sock, ".\n",             NULL);    // end data
+	if (!recvReply(sock,"250")) goto err;
+           sendCommand(sock, "QUIT\n",       NULL);    // terminate
+	if (!recvReply(sock,"221")) goto err;
+
+    close(sock);
+    return 0;
+err:
+    close(sock);
+    return 1;
+}
+
+
+int main(int argc, char *argv[]) {
+    
+    int ret = sendmail(
+        "<harper@niblick.cs.ucf.edu>",    /* from     */
+        "<harper@longwood.cs.ucf.edu>",   /* to       */
+        "My Subject",              	  /* subject  */
+        "This is a test to pegasus",      /* body     */
+        "pegasus.cc.ucf.edu",      	  /* server_hostname */
+		"niblick.cs.ucf.edu",	  /* client_hostname */
+        25                                /* port     */
+    );
+
+    if (ret != 0)
+        fprintf(stderr, "Failed to send mail (code: %i).\n", ret);
+    else
+        fprintf(stdout, "Mail successfully sent.\n");
+
+    return ret;
+}

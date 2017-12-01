@@ -1,0 +1,512 @@
+
+
+
+COP 3402
+Spring 2002
+Lab #3 (30 pts - out of a total of 400 points for the course)
+Due: Tuesday, March 26
+
+Note: The general comments at the beginning and end of the previous
+      two labs apply to this lab as well.  So, you may refer to them
+      to refresh your memory about guidelines.
+
+This program will implement Pass-2 of the two-pass assembler for
+the SIC/XE.
+
+/********************************************************************/
+
+#include <stdio.h>
+
+typedef  char  byte;  /* this means 'byte' is equivalent to 'char' */
+
+FILE  *ot_fptr,   /* Operation Table File Pointer; points to the file
+                     containing the input operation table */
+      *st_fptr,   /* Symbol Table File Pointer; points to the file
+                     containing the input symbol table */
+      *in_fptr,   /* Input File Pointer; points to the file containing
+                     the input for pass-2 */
+      *out_fptr,  /* Output File Pointer; points to the file to contain
+                     all the output of the program */
+      *temp_fptr, /* Temporary File Pointer; points to the file to
+                     temporarily contain part (section exceeding page
+                     width) of the output of the program */
+      *fopen();
+
+#define  TRUE          1
+#define  FALSE         0
+#define  NAME_LENGTH  10  /* maximum number of characters in name  */
+#define  BKT_SIZE     19  /* number of entries in bucket directory */
+#define  DIG_FACTOR    2  /* digit factor used in hashing          */
+#define  LET_FACTOR    3  /* letter factor used in hashing         */
+
+/* an entry in Symbol Table */
+struct st_entry {
+     char    st_name[NAME_LENGTH + 1];
+     char    st_type;  /* R (Relocatable), A (Absolute), 
+                          E (Exported - external definition),
+                          I (Imported - external reference),
+                          C (Control section), N (Not applicable) */
+     int     st_value;
+     struct  st_entry  *st_next;
+};
+struct  st_entry  *symtbl[BKT_SIZE];
+
+#define  OP_LENGTH  6    /* maximum number of characters in operation */
+#define  OT_SIZE    100  /* maximum number of entries in Operation
+                            Table */
+/* an entry in Operation Table */
+struct ot_entry {
+     char  ot_mnemonic[OP_LENGTH + 1];
+     int   ot_format;  /* 0 (assembler directive), 1 (format 1),
+                          2 (format 2), 3 (format 3 or 4) */
+     char  ot_opcode;  /* operation code */
+};
+struct  ot_entry  optbl[OT_SIZE];
+int     ot_count;  /* number of entries in optbl */
+
+/* an entry in Modification Table */
+struct mt_entry {
+     int     mt_addr;    /* starting address of the field to be
+                            modified */
+     int     mt_length;  /* length of the field to be modified; number
+                            of half-bytes in the field */
+     char    mt_sign;    /* + or - : a value is to be added to or
+                            subtracted from the indicated field */
+     char    mt_name[NAME_LENGTH + 1];  /* the symbol whose value is
+                            to be added to or subtracted from the
+                            indicated field */
+     struct  mt_entry  *mt_next;
+};
+struct {
+     struct  mt_entry  *front;
+     struct  mt_entry  *rear;
+} modtbl;  /* modification table; all the modification records are
+              maintained in a queue;
+              when pass-2 needs to generate a modification record for
+              the loader, a new node is inserted into the queue */
+
+int  locctr;  /* location counter */
+
+int  lineno;  /* line number */
+
+#define  OPND_LENGTH  50  /* maximum number of characters in operand */
+#define  INP_LENGTH   70  /* maximum number of characters in an input
+                             line */
+
+byte  objcode[4];  /* object code */
+
+int   basereg;  /* base register; this variable is initialized to zero;
+        when there is a BASE directive, this variable gets the value;
+        when there is a NOBASE directive, this variable is set back to
+        zero */
+
+/********************************************************************/
+
+main()
+{
+   void  init(), pass2(), copy_temp_file(), prntinfo();
+
+   init();
+   pass2();
+   copy_temp_file();
+   prntinfo();   
+}/* end of main */
+
+/********************************************************************/
+
+void init()
+{
+   This routine is used by the main routine.
+   It initializes the global variables such as lineno.
+   It opens the five files (sets ot_fptr, st_fptr, in_fptr, 
+                            out_fptr, temp_fptr).
+   It loads optbl (using ot_fptr); optbl is already sorted, i.e., you 
+        don't need to sort it.  Operation code (value for ot_opcode)
+        will be typed in the input as it appears on page 496.  Note 
+        that using %x to read a value for ot_opcode won't work.  So,
+        you have to read the value (into a temporary variable) and then
+        put this value into the one byte of ot_opcode.
+   It writes optbl to output file (out_fptr).
+   It puts the registers and their values (shown below) in symtbl; set
+        st_type to N for registers.  Insert the registers in the order
+        given below:
+                    register  value
+                       A        0
+                       X        1
+                       L        2
+                       PC       8
+                       SW       9
+                       B        3
+                       S        4
+                       T        5
+                       F        6
+   It loads symtbl (using st_fptr).  Each entry in the input will
+        contain a name, a value and a type.  The hash value for a name
+        is not in the input, so you need to apply the hash function
+        again.  The values (read for st_value) will be typed in the
+        input in hex; use %x to read a value for st_value.
+   It writes symtbl to output file (out_fptr).
+   It initializes modtbl.
+}/* end of init */
+
+/********************************************************************/
+
+void pass2()
+   /* This routine is used by the main routine.  It performs Pass-2 */
+   /* of the assembler.                                             */
+{
+   char  inp_line[INP_LENGTH + 1],  /* input line             */
+         label[NAME_LENGTH + 1],    /* label in the input     */
+         oper[OP_LENGTH + 1],       /* operation in the input */
+         opnd[OPND_LENGTH + 1];     /* operand in the input   */
+   int   op_ind,  /* index of the operation in optbl */
+         len;     /* length of the instruction; number of bytes used
+                     by this instruction */
+   void  get_tokens(), fmt0(), fmt1(), fmt2(), fmt3(), fmt4();
+
+   /* read each input line and perform pass-2 */
+   while ( fgets(&inp_line[0], INP_LENGTH, in_fptr) != NULL ) {
+        /* increment the line number */
+        ++lineno;
+        /* assume the input does not contain comment lines or erroneous
+           lines, i.e., no checking for comments or errors */
+        /* get different parts of the input */
+        get_tokens(inp_line, &label[0], &oper[0], &opnd[0],
+                                                  &op_ind, &len);
+             /* Note: get_tokens will also assign a value to the global
+                variable locctr.  The value in the input is in hex 
+                characters (base 16) and get_tokens must convert it to
+                decimal (base 10);
+                The values (in the input) for op_ind and len are in
+                decimal characters and get_tokens must convert them
+                to decimal */
+        write a line to output file (out_fptr);
+        switch ( optbl[op_ind].ot_format ) {
+             case 0:
+                  fmt0(/* arguments */);
+                  break;
+             case 1:
+                  fmt1(/* arguments */);
+                  break;
+             case 2:
+                  fmt2(/* arguments */);
+                  break;
+             case 3:
+                  if ( operation is format 3  )
+                       fmt3(/* arguments */);
+                  else
+                       fmt4(/* arguments */);
+                  break;
+	}/* end switch */
+        /* Note: I have used a different routine for each format
+                 to make my explanation clearer. */
+   }/* end while */
+}/* end of pass2 */
+
+/********************************************************************/
+
+void fmt0(/* parameters */)
+   /* This routine is used by pass2 to process format 0 (assembler */
+   /* directives).                                                 */
+{
+   The assembler directives are START, END, BYTE, WORD, RESB, RESW,
+   EQU, BASE, NOBASE, CSECT, EXTDEF, and EXTREF.  The directives that
+   pass2 needs to process (i.e., pass1 does not take care of them
+   completely) are:
+   BYTE:  We may have two forms as shown by the following examples:
+              LABEL  BYTE  C'ALI'
+              LABEL  BYTE  X'09AF'
+          In the first case, every character must be put in one byte of
+          objcode, i.e., objcode[0] = 'A', objcode[1] = 'L', ...
+          In the second case, every two hex must be put in one byte
+          of objcode (note that the input is in character form).  so,
+          for the above example, objcode[0] will contain bits 00001001,
+          and objcode[1] will contain bits 10101111.  Assume there will
+          be an even number of hex digits.
+          In both cases, assume that we won't need more than the four
+          bytes in objcode.
+   WORD:  We may have three forms:
+              LABEL  WORD  53
+              LABEL  WORD  extref
+              LABEL  WORD  extref-extref
+          In the first case, put the value in the objcode.  In the
+          second case, add one node to modtbl.  In the third case, add
+          two nodes to modtbl.
+   BASE:  basereg = the value of the label.
+   NOBASE:  basereg = 0.
+   In all cases of format 0, write one line to temporary output
+   file (temp_fptr).  The line number is written to temporary output 
+   file.  Also objcode (if there is objcode for the input line) in
+   hex form and bit form is written to temporary output file.
+}/* end of fmt0 */
+
+/********************************************************************/
+
+void fmt1(/* parameters */)
+   /* This routine is used by pass2 to process format 1. */
+{
+   Put operation code in objcode[0].
+   Write one line to temporary output file (temp_fptr).  The line
+   number and objcode (in hex form and bit form) are written to
+   temporary output file.
+}/* end of fmt1 */
+
+/********************************************************************/
+
+void fmt2(/* parameters */)
+   /* This routine is used by pass2 to process format 2. */
+{
+   Put operation code in objcode[0].
+   Put the two registers (their numbers) in objcode[1].  Note that
+   if the registers are, for example, B and S, symtbl shows B is 3
+   and S is 4.  So, for this example, objcode[1] = 00110100.
+   Write one line to temporary output file (temp_fptr).  The line
+   number and objcode (in hex form and bit form) are written to
+   temporary output file.
+}/* end of fmt2 */
+
+/********************************************************************/
+
+   For formats 3 and 4, you need to set the flag bits.  These were
+   explained in class (e.g., see your notes for Section 2.2.1) and are
+   repeated below:
+     -------------------------------------------------------------
+                                    || n | i || x || b | p || e ||
+     -------------------------------++---+---++---++---+---++---++
+     immediate addressing (#)       || 0 | 1 ||
+     indirect addressing (@)        || 1 | 0 ||
+     otherwise (simple addressing)  || 1 | 1 ||
+     -------------------------------++---+---++---++---+---++---++
+     indexed addressing (...,X)     ||       || 1 ||
+     otherwise                      ||       || 0 ||
+     -------------------------------++---+---++---++---+---++---++
+     base relative addressing       ||            || 1 | 0 ||
+     PC relative addressing         ||            || 0 | 1 ||
+     otherwise (direct addressing)  ||            || 0 | 0 ||
+     -------------------------------++---+---++---++---+---++---++
+     format 3                       ||                     || 0 ||
+     format 4                       ||                     || 1 ||
+     -------------------------------------------------------------
+
+/********************************************************************/
+
+void fmt3(/* parameters */)
+   /* This routine is used by pass2 to process format 3. */
+{
+   Put operation code in objcode[0].
+   (Note that all the operations of type 3/4 have 00 in bits |2|1|.
+    So, putting the flag bits 'n' and 'i' in these two bits will not
+    cause any problem.
+    Also recall that we attempt PC relative first and then base 
+    relative if needed.)
+   Assume that all the displacements for format 3 are positive.
+   Assume displacement cannot be greater than 1023, i.e., after
+        computing the displacement for PC relative, if it is greater
+        than 1023, attempt base relative.
+   In all the following cases, you need to set the flag bits in
+        objcode and put the appropriate values in objcode.
+   If immediate addressing: (#)
+        If #number (e.g., #3)
+             Put the number in objcode.
+        If #LBL
+             Assume LBL is relocatable.
+             Attempt PC relative and, if needed, base relative.
+   If indirect addressing: (@LBL)
+        Assume LBL is relocatable.
+        Attempt PC relative and, if needed, base relative.
+   If simple addressing: (LBL)
+        Attempt PC relative and, if needed, base relative.
+   If indexed addressing: (LBL,X)
+        Attempt PC relative and, if needed, base relative.
+   Write one line to temporary output file (temp_fptr).  The line
+   number and objcode (in hex form and bit form) are written to
+   temporary output file.
+}/* end of fmt3 */
+
+/********************************************************************/
+
+void fmt4(/* parameters */)
+   /* This routine is used by pass2 to process format 4. */
+{
+   Put operation code in objcode[0].
+   For format 4, in general, we add a node to modtbl if the operand
+        in the instruction is relocatable or it is external reference.
+   In all the following cases, you need to set the flag bits in
+        objcode and put the appropriate values in objcode.
+   If immediate addressing: (#)
+        Assume it is #number (e.g., #4096)
+             Put the number in objcode.
+   Assume no indirect addressing.
+   If indexed addressing: (LBL,X)
+        Note that LBL may be local or external.
+             Put the LBL value in objcode.
+             Add a node to modtbl.
+   If direct addressing: (LBL)
+        Put the LBL value in objcode.
+        Add a node to modtbl.
+   Write one line to temporary output file (temp_fptr).  The line
+   number and objcode (in hex form and bit form) are written to
+   temporary output file.
+}/* end of fmt4 */
+
+/********************************************************************/
+
+void copy_temp_file()
+   /* This routine is used by the main routine after all the input   */
+   /* have been processed.  This routine copies the temporary output */
+   /* file (temp_fptr) into the main output file (out_fptr).         */
+{
+   Close the temporary output file (it was opened for "w").
+   Now open this file for "r".
+   Copy this file (temp_fptr) to the main output file (out_fptr).
+}/* end of copy_temp_file */
+
+/********************************************************************/
+
+void prntinfo()
+   /* This routine is used by the main routine after all the input */
+   /* have been processed.  This routine writes the modtbl to the  */
+   /* output file.                                                 */
+{
+   Write each node of the modtbl queue to the output file (out_fptr).
+}/* end of prntinfo */
+
+/********************************************************************/
+
+- Input data (optbl, symtbl and assembly program) will be on the 
+  course web site.  The optbl will be available immediately, but
+  the other files will be available one week before the lab is due.
+- Note that there is no error checking.
+- Note that there is no comment lines.
+- The input data will follow the exact format specified in Sample
+  Input, and your output must follow the exact format specified in
+  Sample output.
+
+Sample Input:
+     The file for optbl
+     12345678901234567890
+     CLEAR  2  B4
+     COMPR  2  A0
+     CSECT  0  FF
+     EXTREF 0  FF
+     JEQ    3  30
+     RSUB   3  4C
+     STCH   3  54
+     WD     3  DC
+     WORD   0  FF
+      ...
+
+     The file for symtbl
+     12345678901234567890
+     RDREC      0000  C
+     BUFFER     0000  I
+     BUFEND     0000  I
+     EXIT       000D  R
+     MAXLEN     0010  R
+
+     The input file for pass-2 (note that we are not concerned with
+     whether or not the program is semantically correct or it makes
+     any sense)
+              1         2         3         4         5
+     123456789012345678901234567890123456789012345678901234567890
+     Loc   Source Statement               Op Index   Length
+     0000  RDREC      CSECT  0                2        0
+     0000             EXTREF BUFFER,BUFEND    3        0
+     0000             CLEAR  X                0        2
+     0002             COMPR  A,S              1        2
+     0004             JEQ    EXIT             4        3
+     0007             +STCH  BUFFER,X         6        4
+     000B             CLEAR  X                0        2
+     000D  EXIT       RSUB                    5        3
+     0010  MAXLEN     WORD   BUFEND-BUFFER    8        3
+
+Sample Output:
+              1         2         3
+     1234567890123456789012345678901234567890
+              Operation Table
+     Index   Operation   Format   Opcode
+       0     CLEAR         2        B4
+       1     COMPR         2        A0
+       2     CSECT         0        FF
+       3     EXTREF        0        FF
+       4     JEQ           3        30
+       5     RSUB          3        4C
+       6     STCH          3        54
+       7     WD            3        DC
+       8     WORD          0        FF
+      ...
+
+              1         2         3
+     1234567890123456789012345678901234567890
+                   Symbol Table
+     Hash Index   Name         Value   Type
+        12        EXIT         000D     R
+                  RDREC        0000     C
+        15        BUFFER       0000     I
+        18        MAXLEN       0010     R
+                  BUFEND       0000     I
+     (The above output will also include the registers.)
+
+              1         2         3         4         5         6
+     1234567890123456789012345678901234567890123456789012345678901234
+     Line   Loc   Source Statement               Op Index   Length
+       1    0000  RDREC      CSECT  0                2        0
+       2    0000             EXTREF BUFFER,BUFEND    3        0
+       3    0000             CLEAR  X                0        2
+       4    0002             COMPR  A,S              1        2
+       5    0004             JEQ    EXIT             4        3
+       6    0007             +STCH  BUFFER,X         6        4
+       7    000B             CLEAR  X                0        2
+       8    000D  EXIT       RSUB                    5        3
+       9    0010  MAXLEN     WORD   BUFEND-BUFFER    8        3
+
+     The following was first written to the temporary file and then
+     copied to the main output file.
+              1         2         3         4         5
+     123456789012345678901234567890123456789012345678901234567890
+     Line   Objcode in Hex   Objcode in Binary
+       1
+       2
+       3     B4 10           10110100 00010000
+       4     A0 04           10100000 00000100
+       5     33 20 06        00110011 00100000 00000110
+       6     57 90 00 00     01010111 10010000 00000000 00000000
+       7     B4 10           10110100 00010000
+       8     4F 00 00        01001111 00000000 00000000
+       9     00 00 00        00000000 00000000 00000000
+
+     Note that each line of the output for assembly source code and
+     the corresponding object code would have been around 120
+     characters (exceeding the page width).  So, what we did was to
+     write part of the output into a temporary file and, after
+     processing all the input lines, we copied the temporary file
+     into the main output file.
+
+              1         2
+     123456789012345678901234567890
+         Modification Table
+     Address  Length  Sign  Name
+       0008     5      +    BUFFER
+       0010     6      +    BUFEND
+       0010     6      -    BUFFER
+
+     Note about the assembler directive BYTE (of type C):
+              LABEL  BYTE  C'ALI'
+     As explained before, the routine fmt0 will put the letters in
+     objcode and write the objcode to the output file.  The bit
+     pattern for letters (such as 'A', 'L' and 'I' in our example)
+     depends on the machine you are using.  You should simply copy
+     characters in opnd into objcode and then print the bits in
+     objcode, whatever they happen to be.  So, for BYTE of type C,
+     different outputs may have different bit patterns, i.e., don't
+     be surprised if your output for BYTE of type C is different
+     from your friend's output.
+
+     Note about modification records in modification table:
+          If a record is being added to modtbl because of an external
+     reference, zero is put in the object code and the external name is
+     the value for mt_name in the modification record.
+     If a record is being added to modtbl because of a local reference,
+     the value for the local name is put in the object code and the
+     control section name is the value for mt_name in the modification
+     record.

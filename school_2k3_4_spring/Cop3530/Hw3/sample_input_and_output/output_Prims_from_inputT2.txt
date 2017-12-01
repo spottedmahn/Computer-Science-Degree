@@ -1,0 +1,19 @@
+Miami	Tampa	2
+Jacksonville	Tampa	3
+Jacksonville	Tampa	3
+Deltona	Orlando	3
+Sanford	Jacksonville	7
+Sanford	Naples	8
+Orlando	SanJuan	13
+Sanford	ATL	13
+Deltona	NewYork	18
+Ocala	Panama	15
+Deltona	NewYork	18
+Detroit	Orlando	30
+Chicago	Detroit	10
+Detroit	Oviedo	27
+Lansing	Canton	4
+Oviedo	Canton	24
+Denver	Detroit	29
+NewYork	LA	34
+MST Weight == 261

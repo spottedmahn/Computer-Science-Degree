@@ -1,0 +1,4 @@
+Miami	Tampa	2
+Jacksonville	Tampa	3
+Orlando	Tampa	4
+MST Weight == 9

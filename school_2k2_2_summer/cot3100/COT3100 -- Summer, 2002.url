@@ -1,0 +1,11 @@
+[DEFAULT]
+BASEURL=http://www.cs.ucf.edu/courses/cot3100.su2002/
+[DOC#5#6]
+BASEURL=http://www.cs.ucf.edu/courses/cot3100.su2002/cot3100_navigation_Su02.html
+ORIGURL=cot3100_navigation_Su02.html
+[DOC#5#7]
+BASEURL=http://www.cs.ucf.edu/courses/cot3100.su2002/cot3100_frontpage_Su02.html
+ORIGURL=cot3100_frontpage_Su02.html
+[InternetShortcut]
+URL=http://www.cs.ucf.edu/courses/cot3100.su2002/
+Modified=D0A9385AECF7C101B0

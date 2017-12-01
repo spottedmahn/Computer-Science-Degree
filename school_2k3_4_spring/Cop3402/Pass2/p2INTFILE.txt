@@ -1,0 +1,153 @@
+1000      PROJ3    START   1000              SAMPLE SOURCE FILE FOR PROJECT 
+          .                                                                  
+          .*****************************************************************
+          .                            MAIN ROUTINE                         
+          .*****************************************************************
+          .                                                                 
+1000      FIRST    CLEAR   A                 DUMMY INSTRUCTION TO START PROG    
+          .
+1002      A        EQU     0
+1002      X        EQU     1
+1002      L        EQU     2
+1002      B        EQU     3
+1002      S        EQU     4
+1002      T        EQU     5
+1002      NUMBER   EQU     5
+          .
+1002               LDA     ONE                                 
+1005               RMO     A,S               
+1007               CLEAR   A                     
+1009               RMO     A,NUMBER
+100B      LOOP     RMO     NUMBER,A                     
+100D               COMP    TEN1              COMPARE NUMBER WITH 10         
+1010               JEQ     STOP                 IF EQUAL, END PROGRAM       
+1013               ADDR    S,A                    
+1015               RMO     A,NUMBER                     
+1017               STA     CONVERT                                          
+101A               JSUB    HEX2DEC           CONVERT NUMBER TO ASCII        
+101D               JSUB    WRDEC                THEN OUTPUT CONVERTED NUMBER
+1020               JSUB    WRMSG                OUTPUT FOLLOWING TEXT MSG   
+1023               RMO     NUMBER,A                     
+1025               MULR    NUMBER,A                    
+1027               STA     CONVERT                                          
+102A               JSUB    HEX2DEC           CONVERT SQUARED VALUE TO ASCII 
+102D               JSUB    WRDEC                THEN OUTPUT CONVERTED SQUARE
+1030               JSUB    WREOL                AND END OF LINE CHARACTER   
+1033               J       LOOP              REPEAT FOR NEXT NUMBER         
+          .                                                                 
+1036      STOP     J       STOP              LOOP FOREVER                   
+          .                                                                 
+          .                                                                 
+          .*****************************************************************
+          .                  GLOBAL AND MAIN ROUTINE VARIABLES              
+          .*****************************************************************
+          .                                                                 
+1039      EXTRA1   RESW    1                 NUMBER TO BE SQUARED     
+          .                                                                 
+103C      OUTDEV   BYTE    X'04'             OUTPUT DEVICE NUMBER           
+103D      OUTBUF   RESB    80                BUFFER TO HOLD OUTGOING ASCII #
+          .                                                                 
+108D      ZERO     WORD    0                 NUMERIC CONSTANTS              
+1090      ONE      WORD    1                                                
+1093      TEN3     WORD    1000                                             
+1096      TEN2     WORD    100                                              
+1099      TEN1     WORD    10                                               
+          .                                                                 
+          .                                                                 
+          .*****************************************************************
+          .           SUBROUTINE TO CONVERT HEX TO DECIMAL NUMBERS          
+          .*****************************************************************
+          .                                                                 
+109C      HEX2DEC  CLEAR   A                     
+109E               STA     PARTIAL                                          
+10A1               CLEAR   X                     
+10A3      DUMMY    EQU     3
+          .                                                                 
+10A3               LDA     CONVERT                                          
+10A6               DIV     TEN3                                             
+10A9               ADD     HEX30                                            
+10AC               STCH    OUTBUF,X                                         
+10AF               SUB     HEX30                                            
+10B2               MUL     TEN3                                             
+10B5               ADD     PARTIAL                                          
+10B8               STA     PARTIAL                                          
+10BB               TIXR    DUMMY                                            
+          .                                                                 
+10BD               LDA     CONVERT                                          
+10C0               SUB     PARTIAL                                          
+10C3               DIV     TEN2                                             
+10C6               ADD     HEX30                                            
+10C9               STCH    OUTBUF,X                                         
+10CC               SUB     HEX30                                            
+10CF               MUL     TEN2                                             
+10D2               ADD     PARTIAL                                          
+10D5               STA     PARTIAL                                          
+10D8               TIXR    DUMMY              
+          .                                                                 
+10DA               LDA     CONVERT                                          
+10DD               SUB     PARTIAL                                          
+10E0               DIV     TEN1                                             
+10E3               ADD     HEX30                                            
+10E6               STCH    OUTBUF,X                                         
+10E9               SUB     HEX30                                            
+10EC               MUL     TEN1                                             
+10EF               ADD     PARTIAL                                          
+10F2               STA     PARTIAL                                          
+10F5               TIXR    DUMMY              
+          .                                                                 
+10F7               LDA     CONVERT                                          
+10FA               SUB     PARTIAL                                          
+10FD               ADD     HEX30                                            
+1100               STCH    OUTBUF,X                                         
+          .                                                                 
+1103               RSUB                                                     
+          .                                                                 
+1106      CONVERT  RESW    1                                                
+1109      PARTIAL  RESW    1                                                
+110C      HEX30    BYTE    X'000030'                                        
+110F      EXTRA2   BYTE    X'DDDDDD'                                        
+          .                                                                 
+          .                                                                 
+          .*****************************************************************
+          .          SUBROUTINE TO WRITE NUMBERS TO FILE                    
+          .*****************************************************************
+          .                                                                 
+1112      WRDEC    CLEAR   X                     
+1114      WLOOP    TD      OUTDEV            TEST OUTPUT DEVICE             
+1117               JEQ     WLOOP             LOOP UNTIL READY               
+111A               LDCH    OUTBUF,X          GET CHARACTER FROM BUFFER      
+111D               WD      OUTDEV            WRITE CHARACTER                
+1120               TIX     MAXOUT            LOOP UNTIL ALL CHARACTERS      
+1123               JLT     WLOOP                HAVE BEEN WRITTEN           
+1126               RSUB                      RETURN TO CALLER               
+1129      MAXOUT   WORD    4                                                
+          .                                                                 
+          .                                                                 
+          .*****************************************************************
+          .          SUBROUTINES TO WRITE MESSAGES TO FILE                  
+          .*****************************************************************
+          .                                                                 
+112C      WRMSG    CLEAR   X                     
+112E      MLOOP    TD      OUTDEV            TEST OUTPUT DEVICE             
+1131               JEQ     MLOOP             LOOP UNTIL READY               
+1134               LDCH    MSGTXT,X          GET CHARACTER FROM BUFFER      
+1137               WD      OUTDEV            WRITE CHARACTER                
+113A               TIX     MSGLEN            LOOP UNTIL ALL CHARACTERS      
+113D               JLT     MLOOP               HAVE BEEN WRITTEN            
+1140               RSUB                      RETURN TO CALLER               
+1143      MSGTXT   BYTE    C' SQUARED'                                      
+114B               BYTE    C' EQUALS '                                      
+1153      MSGLEN   WORD    16                                               
+          .                                                                 
+          .                                                                 
+1156      WREOL    TD      OUTDEV            TEST OUTPUT DEVICE             
+1159               JEQ     WREOL             LOOP UNTIL READY               
+115C               CLEAR   A                 LOAD EOL (00) INTO REG A
+115E               WD      OUTDEV            WRITE TO FILE                  
+1161               RSUB                      RETURN TO CALLER               
+          .                                                                 
+          .*****************************************************************
+          .                     END OF TEST PROGRAM FILE                    
+          .*****************************************************************
+          .                                                                 
+1164               END     FIRST                                            

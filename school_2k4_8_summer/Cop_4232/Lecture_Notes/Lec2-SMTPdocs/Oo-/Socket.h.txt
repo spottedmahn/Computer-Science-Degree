@@ -1,0 +1,19 @@
+#ifndef _SOCKET
+#define _SOCKET
+/* The _SOCKET variable ensures that only one copy of these declarations
+   will be included in program.  All header files in C should be written
+   in this way to prevent multiple declaration errors from the compiler.
+*/
+extern int  OpenSocket(const char* ); 
+     /* Open: creates and initializes a client socket;                          */
+     /* returns 0 if a socket connection was successfully made with the server. */
+extern void CloseSocket();            
+     /* Close: terminates a socket connection.                                  */
+extern void sendCommand(const char *, const char * );  
+     /* sends a command string over the socket.                                 */
+extern int  recvReply  (const char * );                
+     /* checks server reply for expected response; returns 1 if OK              */
+
+#endif
+
+

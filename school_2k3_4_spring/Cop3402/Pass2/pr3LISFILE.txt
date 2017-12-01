@@ -1,0 +1,157 @@
+1000        PROJ3    START   1000              SAMPLE SOURCE FILE FOR PROJECT 
+            .                                                                 
+            .*****************************************************************
+            .                            MAIN ROUTINE                         
+            .*****************************************************************
+            .                                                                 
+1000 B400   FIRST    CLEAR   A                     
+            .                                                                 
+1002        A        EQU     0
+1002        X        EQU     1
+1002        L        EQU     2
+1002        B        EQU     3
+1002        S        EQU     4
+1002        T        EQU     5
+1002        NUMBER   EQU     5
+            .
+1002 001090          LDA     ONE                                              
+1005 AC04            RMO     A,S               
+1007 B400            CLEAR   A                     
+1009 AC05            RMO     A,NUMBER            
+100B AC50   LOOP     RMO     NUMBER,A                     
+100D 281099          COMP    TEN1              COMPARE NUMBER WITH 10         
+1010 301036          JEQ     STOP                 IF EQUAL, END PROGRAM       
+1013 9040            ADDR    S,A                    
+1015 AC05            RMO     A,NUMBER                     
+1017 0C1106          STA     CONVERT                                          
+101A 48109C          JSUB    HEX2DEC           CONVERT NUMBER TO ASCII        
+101D 481112          JSUB    WRDEC                THEN OUTPUT CONVERTED NUMBER
+1020 48112C          JSUB    WRMSG                OUTPUT FOLLOWING TEXT MSG   
+1023 AC50            RMO     NUMBER,A                     
+1025 9850            MULR    NUMBER,A                    
+1027 0C1106          STA     CONVERT                                          
+102A 48109C          JSUB    HEX2DEC           CONVERT SQUARED VALUE TO ASCII 
+102D 481112          JSUB    WRDEC                THEN OUTPUT CONVERTED SQUARE
+1030 481156          JSUB    WREOL                AND END OF LINE CHARACTER   
+1033 3C100B          J       LOOP              REPEAT FOR NEXT NUMBER         
+            .                                                                 
+1036 3C1036 STOP     J       STOP              LOOP FOREVER                   
+            .                                                                 
+            .                                                                 
+            .*****************************************************************
+            .                  GLOBAL AND MAIN ROUTINE VARIABLES              
+            .*****************************************************************
+            .                                                                 
+1039        EXTRA1   RESW    1                 SAVES NUMBER TO BE SQUARED     
+            .                                                                 
+103C 04     OUTDEV   BYTE    X'04'             OUTPUT DEVICE NUMBER           
+103D        OUTBUF   RESB    80                BUFFER TO HOLD OUTGOING ASCII #
+            .                                                                 
+108D 000000 ZERO     WORD    0                 NUMERIC CONSTANTS              
+1090 000001 ONE      WORD    1                                                
+1093 0003E8 TEN3     WORD    1000                                             
+1096 000064 TEN2     WORD    100                                              
+1099 00000A TEN1     WORD    10                                               
+            .                                                                 
+            .                                                                 
+            .*****************************************************************
+            .           SUBROUTINE TO CONVERT HEX TO DECIMAL NUMBERS          
+            .*****************************************************************
+            .                                                                 
+109C B400   HEX2DEC  CLEAR   A                     
+109E 0C1109          STA     PARTIAL                                          
+10A1 B410            CLEAR   X
+10A3        DUMMY    EQU     3                     
+            .                                                                 
+10A3 001106          LDA     CONVERT                                          
+10A6 241093          DIV     TEN3                                             
+10A9 18110C          ADD     HEX30                                            
+10AC 54903D          STCH    OUTBUF,X                                         
+10AF 1C110C          SUB     HEX30                                            
+10B2 201093          MUL     TEN3                                             
+10B5 181109          ADD     PARTIAL                                          
+10B8 0C1109          STA     PARTIAL                                          
+10BB B830            TIXR    DUMMY              
+            .                                                                 
+10BD 001106          LDA     CONVERT                                          
+10C0 1C1109          SUB     PARTIAL                                          
+10C3 241096          DIV     TEN2                                             
+10C6 18110C          ADD     HEX30                                            
+10C9 54903D          STCH    OUTBUF,X                                         
+10CC 1C110C          SUB     HEX30                                            
+10CF 201096          MUL     TEN2                                             
+10D2 181109          ADD     PARTIAL                                          
+10D5 0C1109          STA     PARTIAL                                          
+10D8 B830            TIXR    DUMMY              
+            .                                                                 
+10DA 001106          LDA     CONVERT                                          
+10DD 1C1109          SUB     PARTIAL                                          
+10E0 241099          DIV     TEN1                                             
+10E3 18110C          ADD     HEX30                                            
+10E6 54903D          STCH    OUTBUF,X                                         
+10E9 1C110C          SUB     HEX30                                            
+10EC 201099          MUL     TEN1                                             
+10EF 181109          ADD     PARTIAL                                          
+10F2 0C1109          STA     PARTIAL                                          
+10F5 B830            TIXR    DUMMY              
+            .                                                                 
+10F7 001106          LDA     CONVERT                                          
+10FA 1C1109          SUB     PARTIAL                                          
+10FD 18110C          ADD     HEX30                                            
+1100 54903D          STCH    OUTBUF,X                                         
+            .                                                                 
+1103 4C0000          RSUB                                                     
+            .                                                                 
+1106        CONVERT  RESW    1                                                
+1109        PARTIAL  RESW    1                                                
+110C 000030 HEX30    BYTE    X'000030'                                        
+110F DDDDDD EXTRA2   BYTE    X'DDDDDD'                                        
+            .                                                                 
+            .                                                                 
+            .*****************************************************************
+            .          SUBROUTINE TO WRITE NUMBERS TO FILE                    
+            .*****************************************************************
+            .                                                                 
+1112 B410   WRDEC    CLEAR   X                      
+1114 E0103C WLOOP    TD      OUTDEV            TEST OUTPUT DEVICE             
+1117 301114          JEQ     WLOOP             LOOP UNTIL READY               
+111A 50903D          LDCH    OUTBUF,X          GET CHARACTER FROM BUFFER      
+111D DC103C          WD      OUTDEV            WRITE CHARACTER                
+1120 2C1129          TIX     MAXOUT            LOOP UNTIL ALL CHARACTERS      
+1123 381114          JLT     WLOOP                HAVE BEEN WRITTEN           
+1126 4C0000          RSUB                      RETURN TO CALLER               
+1129 000004 MAXOUT   WORD    4                                                
+            .                                                                 
+            .                                                                 
+            .*****************************************************************
+            .          SUBROUTINES TO WRITE MESSAGES TO FILE                  
+            .*****************************************************************
+            .                                                                 
+112C B410   WRMSG    CLEAR   X                     
+112E E0103C MLOOP    TD      OUTDEV            TEST OUTPUT DEVICE             
+1131 30112E          JEQ     MLOOP             LOOP UNTIL READY               
+1134 509143          LDCH    MSGTXT,X          GET CHARACTER FROM BUFFER      
+1137 DC103C          WD      OUTDEV            WRITE CHARACTER                
+113A 2C1153          TIX     MSGLEN            LOOP UNTIL ALL CHARACTERS      
+113D 38112E          JLT     MLOOP               HAVE BEEN WRITTEN            
+1140 4C0000          RSUB                      RETURN TO CALLER               
+1143 205351 MSGTXT   BYTE    C' SQUARED'                                      
+     554152
+     4544
+114B 204551          BYTE    C' EQUALS '                                      
+     55414C
+     5320
+1153 000010 MSGLEN   WORD    16                                               
+            .                                                                 
+            .                                                                 
+1156 E0103C WREOL    TD      OUTDEV            TEST OUTPUT DEVICE             
+1159 301156          JEQ     WREOL             LOOP UNTIL READY               
+115C B400            CLEAR   A                     
+115E DC103C          WD      OUTDEV            WRITE TO FILE                  
+1161 4C0000          RSUB                      RETURN TO CALLER               
+            .                                                                 
+            .*****************************************************************
+            .                     END OF TEST PROGRAM FILE                    
+            .*****************************************************************
+            .                                                                 
+1164                 END     FIRST                                            

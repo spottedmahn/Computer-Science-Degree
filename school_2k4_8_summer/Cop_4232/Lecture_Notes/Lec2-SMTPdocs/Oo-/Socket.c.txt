@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include "Socket.h"
+
+#define LINUX /* define this if you are on linux or UNIX   */
+//#define WIN32 /* define this if you are on windows */
+
+#ifdef WIN32
+#       include "io.h"
+#       include "winsock2.h"      /* WSAGetLastError, WSAStartUp  */
+#       define snprintf _snprintf
+#endif
+
+#ifdef LINUX
+#       include <netdb.h>         /* gethostbyname  */
+#       include <netinet/in.h>    /* htons          */
+#       include <sys/socket.h>
+#endif
+
+
+/* This is the encapsulated data. Declaring it static prevents 
+   any code outside this file from directly accessing it.  This
+   is the meaning of data encapsulation.
+*/
+static int sockid             = 0;
+static const int port         = 25;
+static struct hostent *server = NULL;   
+static struct sockaddr_in saddr_in;
+
+
+
+int OpenSocket(const char * servername ){
+
+#ifdef WIN32
+    WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+       return -1;
+    }/*if*/
+#endif
+
+
+    /* initialize encapsulated data */
+    sockid = socket(AF_INET, SOCK_STREAM, 0);
+    if( !(server = gethostbyname(servername)) ) return -1;
+    saddr_in.sin_family      = AF_INET;
+    saddr_in.sin_port        = htons((u_short)port);
+    saddr_in.sin_addr.s_addr = 0;
+    memcpy((char*)&(saddr_in.sin_addr), server->h_addr, server->h_length);
+
+    if (connect(sockid, (struct sockaddr*)&saddr_in, sizeof(saddr_in)) == -1) {
+       return -2;
+    }/*if*/
+   
+
+    return 0;
+
+}/*OpenSocket*/
+
+
+void CloseSocket(){
+
+    close(sockid);
+
+}/*CloseSocket*/
+
+
+void sendCommand( const char *str, const char *arg  ) {
+    char buf[4096];
+
+    if (arg != NULL) {
+          snprintf(buf, sizeof(buf), str, arg);        
+	  printf("SEND: "); printf(str,arg);    /* echo to screen */
+    } else {
+          snprintf(buf, sizeof(buf), str);
+	  printf("SEND: "); printf("%s\n",str); /* echo to screen */
+    }/*else*/
+    
+    send(sockid, buf, strlen(buf), 0);    
+
+}/*sendCommand*/
+
+int recvReply( const char *reply ) {
+
+	char rbuff[4096];
+	int i = recv ( sockid, rbuff, sizeof(rbuff) , 0);
+	if (i != -1) {
+		rbuff[i] = 0; /* insert null byte at end of reply string */
+		printf("(Looking For: %s) Received: %s\n",reply, rbuff);
+		if (strncmp(reply, rbuff, strlen(reply)) == 0)
+			return 1;  /* reply code is correct              */
+		else
+			return 0;  /* expected reply code does not match */
+	} else {
+		printf("Receive Error!\n");
+		return 0;
+	}
+}/*recvReply*/
+
+
+
+
+
+
+

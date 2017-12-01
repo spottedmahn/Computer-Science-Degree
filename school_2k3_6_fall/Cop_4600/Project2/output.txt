@@ -1,0 +1,35 @@
+0 	 temp1.txt 	 Wed Nov 05 15:48:09 2003
+
+temp.txt created successfully
+0 	 temp.txt 	 Wed Nov 05 15:49:14 2003
+
+0 	 temp1.txt 	 Wed Nov 05 15:48:09 2003
+
+failed to create file
+0 	 temp.txt 	 Wed Nov 05 15:49:14 2003
+
+0 	 temp1.txt 	 Wed Nov 05 15:48:09 2003
+
+attribute set successfully
+0 	 temp1.txt 	 Wed Nov 05 15:48:09 2003
+
+attribute set successfully
+0 	 temp.txt 	 Wed Nov 05 15:49:14 2003
+
+0 	 temp1.txt 	 Wed Nov 05 15:48:09 2003
+
+programs created successfully
+0 	 temp.txt 	 Wed Nov 05 15:49:14 2003
+
+0 	 temp1.txt 	 Wed Nov 05 15:48:09 2003
+
+<DIR> 	 programs 	 Wed Nov 05 15:49:14 2003
+
+temp.txt deleted successfully
+0 	 temp1.txt 	 Wed Nov 05 15:48:09 2003
+
+<DIR> 	 programs 	 Wed Nov 05 15:49:14 2003
+
+programs deleted successfully
+0 	 temp1.txt 	 Wed Nov 05 15:48:09 2003
+

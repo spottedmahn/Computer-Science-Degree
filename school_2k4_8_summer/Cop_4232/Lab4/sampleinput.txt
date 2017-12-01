@@ -1,0 +1,33 @@
+Classroom{ rows: 6
+	   cols: 6
+	   students: 36		
+	   classLength: 60	
+	   Instructor{ agentid: Workman
+		       prepDelay: 3
+		       gradingDelay: 3 	
+		       Lecture{ numConcepts: 10		
+			        Concept{ name: Sorting
+				         difficulty:  3.5 	
+                                         q&aPeriod: 10          
+				         numFacts: 5			
+				         Fact{ id: BubbleSort 
+                                               numexamples: 3
+                                               exDelay: 5
+                                         }Fact
+					 ...
+			        }Concept
+			        ...
+		       }Lecture
+		       Quiz{ numQuestions: 15	           
+			     Question{  Fact:  Bubblesort
+		             }Question
+			     ...
+		       }Quiz
+	    }Instructor
+	    Student{ agentid: Gordon
+		     TOA:  15	
+		     ansDelay:  3 
+		     comprehension:  3.5
+	    }Student
+            ...
+}Classroom 

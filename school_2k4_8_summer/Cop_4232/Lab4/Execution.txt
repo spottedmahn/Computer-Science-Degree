@@ -1,0 +1,85 @@
+This is relatively how the program will execute:
+
+Classroom::Classroom - Constructor is first call, reads in all input from input file.
+
+Classroom::PutState - Echoes input
+
+Classroom::Initialize - This will construct a players message pointer and call the initialize method
+for each agent involved.
+
+Student::Initialize - This will set the variable instr, so that the student will know who to send
+messages to (besides themselves).  Next the function will post an event with a "time of arrival" message
+to Student
+
+Instructor::Initialize - This will set the students array so that the instructor knows who to pass
+messages to (besides himself).  Next the function will post an event with a "finished prepping" message
+to Instructor and also will post an event with a "end of lecture" message to  Instructor.
+
+Classroom::Simulate - This will process every event on the queue until it is emptied
+
+
+****Here's how the messages will be processed in simulate
+
+
+Student recieves "time of arrival" message. Variable isPresent is set to true.
+
+Instructor recieves "finished prepping" message. "Begin of concept" message is then sent to Instructor
+and to all students.
+
+Instructor recieves "Begin of concept" message.  currConcept is updated. "example" messages are then 
+sent to all Students for each example that exists.  "End of Fact" message is also sent to all students
+and to Instructor.
+
+Student recieves "Begin of concept" message.  currConcept is updated.
+
+Student recieves "Example" message.  if currConcept == conceptNum, Students understanding is increased.
+
+Student recieves "End of Fact" message.  If understanding < 1, student will queue a question (but not post it yet)
+
+Instructor recieves "End of Fact" message.  If more Facts exist "example" messages are then sent to all 
+Students for each example that exists in the next fact.  "End of Fact" message is also sent to all students
+and to Instructor. Otherwise "End of Concept" message is sent to all students and self.
+
+Student recieves "end of Concept" message.  For each question on the queue, Student will send instructor a 
+"question" message.
+
+Instructor recieves "end of concept" message.  Instructor sends "discussion check" message to self.
+
+Instructor recieves "discussion check" message.  If no questions are asked, currConcept is incremented.  "Begin of concept" 
+(with a delay of 0) message is then sent to Instructor and to all students.  If there are questions
+"Begin of concept" (with a delay of .75 * discussion) message is then sent to Instructor and to all students. ***NOTE:
+if no more concepts are left, Instructor will send "end of lecture" message to self.
+
+Instructor recieves "question" message.  If conceptNum == currConcept, then "example" messages are then 
+sent to all Students for each example that exists.  "End of Fact" message is also sent to all students
+and to Instructor.  Otherwise the message is ignored.
+
+Instructor recieves "end of lecture". Queue is emptied.  Instructor sends "End of Exam" message to all students.  
+Instructor also sends a multiple of "anouncement" messages to each student. Instructor then sends "quiz" message
+to each student.
+
+Student recieves "quiz" message. Student puts name on exam.  Student sends "quiz question" message to self.
+
+Student recieved "quiz question" message.  If isPresent = true Student answers question. Otherwise no action is taken. 
+If there are more questions, Student send out "quiz question" message to self.  Otherwise, student sends "Quiz" 
+message to instructor and set isPresent to false.
+
+Student recieves "anouncement" message. No action taken yet.
+
+Student recieve "end of exam" message.  Student sends "quiz" message to teacher.  isPresent is set to false.
+
+Teacher recieves "quiz" message.  Action has not been determined.  somehow will grade each exam in a serial fashion.
+
+
+
+
+IMPORTANT
+
+A student cannot start learning until isPresent is true
+A student cannot learn previous facts.  Only ones that are associated with the current concept.
+Once a discussion period has ended, Teacher will not answer any more questions.
+All pending material is erased when lecture time is over.
+Teacher can grade only one quiz at a time
+
+
+

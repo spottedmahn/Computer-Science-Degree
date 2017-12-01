@@ -1,0 +1,186 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link REL="STYLESHEET" HREF="style.css" TYPE="text/css">
+<title>Albums T Thru Z</title>
+<script language="JavaScript">
+	function newWindow(albums){
+				albumsWindow = window.open(albums, 'music', 'width=500,height=460,scrollbars=yes,resizable=yes')
+				albumsWindow.focus()
+	}
+testI_off = new Image;
+testI_on = new Image;
+
+testI_off.src = "images/play_138_on.jpg"
+testI_on.src = "images/play_138_off.jpg"
+</script>
+</head>
+<body background="images/t079big.jpg">
+<a name="#top"></a>
+<center>
+<!--StartAppend-->
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_464.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_464.gif" width="464">
+	<tr>
+		<td>
+			<table align="center">
+				<tr><td align="center"><a href="#t"><img src="images/t_blue.gif" border="0" name="t" height="35" width="46"></a>&nbsp;<a href="#u"><img src="images/u_blue.gif" border="0" name="u" height="35"></a>&nbsp;<a href="#v"><img src="images/v_blue.gif" border="0" name="v" height="35"></a>&nbsp;<a href="#w"><img src="images/w_blue.gif" border="0" name="w" height="35"></a>&nbsp;<a href="#x"><img src="images/x_blue.gif" border="0" name="x" height="35"></a>&nbsp;<a href="#y"><img src="images/y_blue.gif" border="0" name="y" height="35"></a>&nbsp;<a href="#z"><img src="images/z_blue.gif" border="0" name="z" height="35"></a></td></tr>
+			</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_464.gif"></td></tr>
+</table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_750.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_750.gif" width="750">
+	<tr>
+		<td>
+<table align="center">
+<tr><td colspan="7" align="center"><a name="t"><img src="images/t.gif" border="0" name="t"></a></td></tr>
+<!--StartSort-->
+<!--Insert_t-->
+<tr>
+<td><a href="\\videofactory\movies_t-z\Toy_Story_1\Toy_Story_1.asx" onmouseover="window.status='Toy_Story_1';return true" onmouseout="window.status='';return true"><img src="C:/jewel/Toy_Story_1.jpg" height="242" width="170" alt="Toy_Story_1" border="0"></a></td>
+<td><a href="\\videofactory\movies_t-z\Tuxedo_The\Tuxedo_The.asx" onmouseover="window.status='Tuxedo_The';return true" onmouseout="window.status='';return true"><img src="C:/jewel/Tuxedo_The.jpg" height="242" width="170" alt="Tuxedo_The" border="0"></a></td>
+</tr>
+<!--EndSort-->
+</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_750.gif"></td></tr>
+</table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_750.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_750.gif" width="750">
+	<tr>
+		<td>
+<table align="center">
+<tr><td align="center" colspan="7"><h1><a name="#u"><img src="images/u.gif" border="0" name="u"></a></h1></td></tr>
+<!--StartSort-->
+<!--Insert_u-->
+<tr>
+<td><a href="\\videofactory\movies_t-z\Undercover_Brother\Undercover_Brother.asx" onmouseover="window.status='Undercover_Brother';return true" onmouseout="window.status='';return true"><img src="C:/jewel/Undercover_Brother.jpg" height="242" width="170" alt="Undercover_Brother" border="0"></a></td>
+</tr>
+<!--EndSort-->
+</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_750.gif"></td></tr>
+</table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_750.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_750.gif" width="750">
+	<tr>
+		<td>
+<table align="center">
+<tr><td align="center" colspan="7"><h1><a name="#v"><img src="images/v.gif" border="0" name="v"></a></h1></td></tr>
+<!--StartSort-->
+<!--Insert_v-->
+<tr>
+<td><a href="\\videofactory\movies_t-z\Van_Wilder\Van_Wilder.asx" onmouseover="window.status='Van_Wilder';return true" onmouseout="window.status='';return true"><img src="C:/jewel/Van_Wilder.jpg" height="242" width="170" alt="Van_Wilder" border="0"></a></td>
+</tr>
+<!--EndSort-->
+</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_750.gif"></td></tr>
+</table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_750.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_750.gif" width="750">
+	<tr>
+		<td>
+<table align="center">
+<tr><td align="center" colspan="7"><h1><a name="#w"><img src="images/w.gif" border="0" name="w"></a></h1></td></tr>
+<!--StartSort-->
+<!--Insert_w-->
+<tr>
+</tr>
+<!--EndSort-->
+</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_750.gif"></td></tr>
+</table>
+
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_750.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_750.gif" width="750">
+	<tr>
+		<td>
+<table align="center">
+<tr><td align="center" colspan="7"><h1><a name="#x"><img src="images/x.gif" border="0" name="x"></a></h1></td></tr>
+<!--StartSort-->
+<!--Insert_x-->
+<tr>
+<td><a href="\\videofactory\movies_t-z\XXX\XXX.asx" onmouseover="window.status='XXX';return true" onmouseout="window.status='';return true"><img src="C:/jewel/XXX.jpg" height="242" width="170" alt="XXX" border="0"></a></td>
+</tr>
+<!--EndSort-->
+<tr><td align="center" colspan="7"><a href="\\musicfactory\ind_let_enq\enqueue_all_x_red.m3u"><img src="images/enqueue_all_x_red.jpg" name="a" border="0"></a></td></tr>
+<tr><td align="center" colspan="7">10/03/02</td></tr>
+</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_750.gif"></td></tr>
+</table>
+
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_750.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_750.gif" width="750">
+	<tr>
+		<td>
+<table align="center">
+<tr><td align="center" colspan="7"><h1><a name="#y"><img src="images/y.gif" border="0" name="y"></a></h1></td></tr>
+<!--StartSort-->
+<!--Insert_y-->
+<tr>
+</tr>
+<!--EndSort-->
+</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_750.gif"></td></tr>
+</table>
+
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_750.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_750.gif" width="750">
+	<tr>
+		<td>
+<table align="center">
+<tr><td align="center" colspan="7"><h1><a name="#z"><img src="images/z.gif" border="0" name="z"></a></h1></td></tr>
+<!--StartSort-->
+<!--Insert_z-->
+<tr>
+</tr>
+<!--EndSort-->
+</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_750.gif"></td></tr>
+</table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/top_464.gif"></td></tr>
+</table>
+<table cellspacing="1" cellpadding="1" border="0" align="center" background="images/middle_center_464.gif" width="464">
+	<tr>
+		<td>
+			<table align="center">
+				<tr><td><a href="#top"><img src="images/top_off.gif" border="0"></a></td></tr>
+			</table>
+</td></tr></table>
+<table cellpadding="0" cellspacing="0" align="center">
+		<tr><td><img src="images/bottom_464.gif"></td></tr>
+</table>
+<!--EndAppend-->
+</body>
+</html>

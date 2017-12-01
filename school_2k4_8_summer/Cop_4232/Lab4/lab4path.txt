@@ -1,0 +1,87 @@
+classes:
+
+Classroom -  Similar to Conversation class in Hw3
+   int rows
+   int columns
+   int students
+   int classlength
+   Instructor
+   Student[]
+
+
+Student:Agent - also similar to student in hw3. changes: Rewrite dispatch methods for handling new message (make new handle id's)
+                                                         Make new methods corresponding to each handle id (both send and recieve methods)
+                                                         rewrite initialize method so student recognizes teacher
+                                                         update file output methods 
+   string agent_id - inherited
+   int Time_of_arrival
+   int Ansdelay
+   double comprehension
+   double score
+   you - tells who their messages will be directed to
+   string ConceptNames[]
+   Quiz* 
+   int currQuestion
+   Learned[]
+   list<string> QuestionQ
+   bool isPresent
+   
+   
+
+Learned
+   
+   double understanding
+   string factName
+   string ConceptName
+
+
+Instructor:Agent - similar to student. Methods include: Constructor
+                                                        set/get methods
+                                                        dispatch
+                                                        initialize
+                                                        Methods for each handle id (both send and recieve methods)
+                                                        file output methods
+   string agent_id - inherited                                                 
+   int Prepdelay
+   int gradingDelay
+   Lecture
+   Quiz
+   Bool questionAsked
+   Quiz* gradeQ;
+   Student* *s;
+
+Players:Message - Similar to players in hw3. Listed below in messages section
+   int numStudents
+   Instructor
+   Students[]
+   
+Lecture - Methods include Constructor, get/set methods, file output methods
+   int #concepts
+   Concept[]
+
+Concept - Methods include Constructor, get/set methods, file output methods
+   string name
+   int conceptNum
+   double difficulty
+   int Q&Aperiod
+   int #facts
+   Fact[]
+
+Fact- Methods include Constructor, get/set methods, file output methods
+   string ID
+   int #examples
+   int exdelay
+
+Quiz - Methods include Constructor, get/set methods, file output methods
+   String student name
+   int #questions
+   Question
+   double score - do not output (is printed in student class)
+
+Question - Methods include Constructor, get/set methods, file output methods
+   string factname
+   string answer //concept associated with the fact
+   bool correct  // default : false
+
+
+

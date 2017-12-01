@@ -1,0 +1,13 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "HW3_2", "HW3_2.vjp", "{285FEAE9-CCFE-43A7-B226-32DE3C18270E}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {285FEAE9-CCFE-43A7-B226-32DE3C18270E}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {285FEAE9-CCFE-43A7-B226-32DE3C18270E}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

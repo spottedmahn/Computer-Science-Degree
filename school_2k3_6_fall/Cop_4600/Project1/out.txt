@@ -1,0 +1,137 @@
+First-Fit
+Allocate Process 1
+Free Memory = 1004
+20 used
+1004 free
+Allocate Process 2
+Free Memory = 994
+20 used
+10 used
+994 free
+Allocate Process 1
+Free Memory = 944
+20 used
+10 used
+50 used
+944 free
+Allocate Process 3
+Free Memory = 929
+20 used
+10 used
+50 used
+15 used
+929 free
+Deallocate Process 1
+Free Memory = 999
+20 free
+10 used
+50 free
+15 used
+929 free
+Allocate Process 2
+Free Memory = 974
+20 free
+10 used
+25 used
+25 free
+15 used
+929 free
+Deallocate Process 2
+Free Memory = 1009
+80 free
+15 used
+929 free
+Allocate Process 1
+Free Memory = 989
+20 used
+60 free
+15 used
+929 free
+Allocate Process 4
+Free Memory = 949
+20 used
+40 used
+20 free
+15 used
+929 free
+Allocate Process 4
+Free Memory = 929
+20 used
+40 used
+20 used
+15 used
+929 free
+Allocate Process 5
+Free Memory = 899
+20 used
+40 used
+20 used
+15 used
+30 used
+899 free
+Allocate Process 2
+Free Memory = 855
+20 used
+40 used
+20 used
+15 used
+30 used
+44 used
+855 free
+Allocate Process 1
+Free Memory = 815
+20 used
+40 used
+20 used
+15 used
+30 used
+44 used
+40 used
+815 free
+Allocate Process 1
+Free Memory = 747
+20 used
+40 used
+20 used
+15 used
+30 used
+44 used
+40 used
+68 used
+747 free
+Deallocate Process 3
+Free Memory = 762
+20 used
+40 used
+20 used
+15 free
+30 used
+44 used
+40 used
+68 used
+747 free
+Deallocate Process 1
+Free Memory = 890
+20 free
+40 used
+20 used
+15 free
+30 used
+44 used
+855 free
+Deallocate Process 5
+Free Memory = 920
+20 free
+40 used
+20 used
+45 free
+44 used
+855 free
+Deallocate Process 4
+Free Memory = 980
+125 free
+44 used
+855 free
+Deallocate Process 2
+Free Memory = 1024
+1024 free

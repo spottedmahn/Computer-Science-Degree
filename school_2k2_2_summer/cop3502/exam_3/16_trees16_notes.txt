@@ -1,0 +1,11 @@
+leftchild a => 2i ex. (2)(1)=2
+rightchild a=> 2i + 1 (2)(1) + 1 = 3
+
+ask how preoder transversal works
+
+************ Important ***********************
+Preorder:  Visit node, visit left subtree, visit right subtree
+Inorder: Visit left subtree, visit node, visit right subtree
+Postorder: Visit left subtree, visit right subtree, visit node
+
+how to go from postfix to infix.

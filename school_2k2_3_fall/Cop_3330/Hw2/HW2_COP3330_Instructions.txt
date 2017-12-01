@@ -1,0 +1,72 @@
+This program will require writing two java files.  Both source files
+must be well documented of course.  
+
+The first file will be called Ant.java  
+The second file will be called HW2.java
+
+All fields in Ant.java must be private.  The objective of this program
+is to write an ant simulation.  You must have three ants declared in
+HW2.java  .   The ants race against each other.  There will
+be one command line parameter, D, a positive integer which indicates the
+distance to travel. On the first three lines of input will be information
+on each ant.  Each of these lines will be of the form: M A S, all integers.
+M is the metabolism and A is the agility. S is the stamina.
+
+After these lines, then the ant simulation will start.  There will be two
+kinds of lines.
+1. travel lines of the form a b c, all ints.
+2. World command lines, which can take on various forms.
+
+
+1. the travel lines correspond to the speed the ant can travel.  However
+because of the race conditions the distance traveled is the speed 
+divided by agility. Each travel command reduces the stamina of each ant
+by the amount M (note this is different for each ant).  
+
+**NOTE** so what does this mean?  Suppose the D value is 10, and ant 1 has
+agility of 2.  Suppose further that i enter a travel line and for ant1 it is
+4.  Then the distance traveled would be 4/2=2.  So now ant 1 needs to go 
+8 units before it finishes.  At this point we do not use this same speed of 4.
+So this speed i give is ONLY for one distance computation.  On the next line
+I could enter a status command or a squashed or anything else.  Then you
+just do whatever processing is necessary for that command.  Eventually I will
+enter another travel info command.  Suppose for ant1 its speed is 6.  Then
+the distance traveled is 6/2=3.  Thus now ant1 has traveled half the distance
+of the whole race (5 units).   So each travel info command, gives the speed
+for one "burst".  Any questions let me know.
+
+Once the stamina is at zero, the ant will be penalized.  The penalty will be that the total 
+distance this ant has traveled should be decreased by 1 unit.  Then the stamina is
+restored to its original value.  So here the concept of eating is removed.  Instead of eating,
+the ant will have a distance penatly.  Nothing else should be done.  There may be some
+confusion whether to add one to the distance an ant needs to travel would be the same.  And it
+is a little different, as this would affect the status command and could create some confusions. 
+So to standardize things the distance traveled for this ant should be subtracted by one.  Nothing 
+else should be done.
+
+Note the race is over when any ant reaches the final distance, note that this means
+if the race is 10 units and a particular ant has traveled 10 units the race is over.
+So if the distance traveled is greater or equal to the D value then the race is over.  Once the 
+race is over the distance traveled for each ant is displayed for each ant.
+Your program should then exit.
+
+2. World commands are as follows:
+status  
+when this command is read from standard input, the ant number and the 
+distance traveled for this ant is printed, one ant per line.  So
+ant1 distance traveled
+ant2 distance traveled ... is fine
+
+squashed A
+this command means an ant was squashed, and it is now out of the race.
+When an ant is squashed it will still have an entry in a travel command
+but it will be zero.  When a status is requested the ant# with the word
+squashed by itself with no distance traveled should be printed.  The A value will be 1,2 or 3, 
+indicating which ant was squashed.  So the status will look like ant#A squashed.  A will depend
+on which ant it is that is squashed.
+
+
+energy A B
+this causes the stamina of ant A to be incremented by the value B. It
+does not change the current stamina, but it increments the original
+stamina value by the amount B.

@@ -1,0 +1,51 @@
+COPY     START   0
+.
+. This is the test source file for Pass 1
+.
+. Please include a printout of the intermdiate file and symbol table
+.    generated using this source when turning in your assignment
+.
+. Note that we are not concerned with whether or not the
+.    program is semantically correct or it makes any sense!
+.
+FIRST    STL     RETADR
+         LDB    #20
+CLOOP1  +JSUB    RDREC
+         ADD     LENGTH
+         JEQ     ENDFIL
+         J       CLOOP             THIS IS A GOOD LABEL 
+ENDFIL   FIX
+         CLEAR   A
+LENGTH   RESW    32
+RETADR   RESW    1
+VALUE    WORD    9999
+         COMPR   B,S
+. Watch out everybody
+        %LDA     DATA1
+         LDA    %DATA1
+2LOOP    J       FIRST             THIS IS A BAD LABEL 
+ENDFIL   FLOAT 
+         JSUB    BADCMT       THIS IS A BAD COMMENT
+         NONO    0
+         J      @RETADR
+         YESYES  10
+CLOOP2   FIX
+. Not bad!
+         STCH    LENGTH,X
+CL       BYTE    C'STRINGER'
+CLS      BYTE    C'HAL'
+XL       BYTE    X'09AF'
+XLS      BYTE    X'AC07C1'
+         CLEAR   S
+NUM      EQU     500
+BUFFER   RESB    2048
+BUFEND   EQU     *
+MAXLEN   EQU     BUFEND-BUFFER
+NEGLEN   EQU     BUFFER-BUFEND
+CONS     EQU     1024
+BADEXP   EQU     NUM-BUFEND
+BUFE2    EQU     BUFEND
+MAXL2    EQU     MAXLEN
+.
+. Almost done
+RDREC    END     FIRST

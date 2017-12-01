@@ -1,0 +1,7 @@
+/************************************************
+**  Name: HWX Programming Excercise #T
+**  Author: Mike DePouw
+**  Date: 2005/09/22
+**  Description: Implementation of HWX Programming Excercise #T.
+**  Complied With: CodeWarrior 4.2.5.766
+************************************************/

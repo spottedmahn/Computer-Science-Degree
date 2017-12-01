@@ -1,0 +1,9 @@
+Miami Orlando 3
+Miami Tampa 8
+Orlando Jacksonville 1
+Miami Naples -4
+Orlando Naples 7
+Tampa Orlando 4
+Jacksonville Miami 2
+Jacksonville Tampa -5
+Naples Jacksonville 6

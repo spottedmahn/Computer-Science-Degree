@@ -1,0 +1,13 @@
+set Mon
+next
+prev
+calc 8
+set Tue
+next
+calc 22
+set Sat
+next
+prev
+set Wed
+calc 11
+

@@ -1,0 +1,6 @@
+2
+valid
+a
+b
+valid
+quit

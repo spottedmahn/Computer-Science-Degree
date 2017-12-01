@@ -1,0 +1,19 @@
+Source is Detroit
+Miami	36
+Orlando	30
+Tampa	34
+Jacksonville	37
+Naples	52
+Sanford	44
+Deltona	33
+Ocala	142
+Panama	127
+NewYork	51
+LA	85
+ATL	50
+Oviedo	27
+Canton	51
+Chicago	10
+Denver	29
+SanJuan	43
+Lansing	55

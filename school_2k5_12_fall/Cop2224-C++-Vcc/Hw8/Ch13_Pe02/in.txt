@@ -1,0 +1,15 @@
+new
+set 1 1 2000
+add 4
+add 30
+daysPassed
+add 31
+add 60
+daysPassed
+set 12 30 2000
+print
+add 2
+add 2
+daysInMonth 2
+daysPassed
+daysRemaining

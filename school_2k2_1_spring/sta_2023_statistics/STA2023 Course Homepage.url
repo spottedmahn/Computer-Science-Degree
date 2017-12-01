@@ -1,0 +1,17 @@
+[DEFAULT]
+BASEURL=http://pegasus.cc.ucf.edu/~sschott/STA2023/sta2023hp.html
+[DOC#3#4]
+BASEURL=http://pegasus.cc.ucf.edu/~sschott/STA2023/header.html
+ORIGURL=header.html
+[DOC#3#6#7]
+BASEURL=http://pegasus.cc.ucf.edu/~sschott/STA2023/navigate.html
+ORIGURL=navigate.html
+[DOC#3#6#8]
+BASEURL=http://pegasus.cc.ucf.edu/~sschott/STA2023/ch1_3.html
+ORIGURL=ch1_3.html
+[InternetShortcut]
+URL=http://pegasus.cc.ucf.edu/~sschott/STA2023/sta2023hp.html
+Modified=10C1E931CC97C10110
+[DOC#3#5]
+BASEURL=http://pegasus.cc.ucf.edu/~sschott/STA2023/footer.html
+ORIGURL=footer.html

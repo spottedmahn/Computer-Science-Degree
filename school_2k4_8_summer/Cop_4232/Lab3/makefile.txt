@@ -1,0 +1,22 @@
+lab3: conversationsim.o apperrors.o IOMgmt.o simmgmt.o simmodels.o 
+	g++ -lm -o lab3 conversationsim.o apperrors.o IOMgmt.o  simmgmt.o simmodels.o 
+
+apperrors.o: apperrors.cpp apperrors.h
+	g++ -c apperrors.cpp
+
+IOMgmt.o: IOMgmt.cpp IOMgmt.h apperrors.h
+	g++ -c IOMgmt.cpp
+
+simmgmt.o: simmgmt.cpp simmgmt.h IOMgmt.h apperrors.h
+	g++ -c simmgmt.cpp
+
+simmodels.o: simmodels.cpp simmodels.h simmgmt.h IOMgmt.h apperrors.h
+	g++ -c simmodels.cpp
+
+conversationsim.o: conversationsim.cpp simmodels.h simmgmt.h IOMgmt.h apperrors.h
+	g++ -c conversationsim.cpp
+
+clean:
+	rm *.o lab3  
+
+

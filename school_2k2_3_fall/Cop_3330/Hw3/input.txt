@@ -1,0 +1,2 @@
+subtract 100 4
+quit

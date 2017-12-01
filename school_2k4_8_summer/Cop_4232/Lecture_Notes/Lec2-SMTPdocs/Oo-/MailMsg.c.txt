@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include "MailMsg.h"
+
+
+// The following declarations are the encapsulated data 
+static char *from;
+static char *to;
+static char *subject;
+static char *body;
+static char *servername;
+static char *clientname;
+static char flags = 0;       
+
+
+
+void setClient( char *clienthost){
+   if( clienthost != NULL ){
+     clientname = clienthost;
+     flags |= 0x01;
+   }
+}
+
+
+void setFrom  ( char *fromaddr){
+
+   if( fromaddr != NULL ){
+     from = fromaddr;
+     flags |= 0x02;
+   }
+}
+
+void setServer( char *serverhost){
+   if( serverhost != NULL ){
+     servername = serverhost;
+     flags |= 0x04;
+   }
+}
+
+void setSubject( char *subj ){
+
+   if( subj != NULL ){
+     subject = subj;
+     flags |= 0x08;
+   }
+
+}
+
+void setTo( char *toaddr ){
+
+   if( toaddr != NULL ){
+     to = toaddr;
+     flags |= 0x10;
+   }
+
+}
+
+void setText  ( char *msg ){
+
+   if( msg != NULL ){
+     body = msg;
+     flags |= 0x20;
+   }
+ 
+}
+
+
+int sendMessage() {
+    //  Note: 00111111(base 2) = 3F(base 16) = 63(base 10)
+    //  Instead of (flags < 63), we could have written ( flags ^ 0x3F )
+    //  This is saying, flags xor 0x3F.  Any bits that are different
+    //  between flags and the mask (0x3F) will result in a non-zero 
+    //  value - non-zero in C is treated as "true"
+    if( flags < 63 || OpenSocket( servername ) < 0 ) goto err;
+    if (!recvReply("220")) goto err;
+
+    sendCommand("EHLO %s\n",clientname);   // greeting
+    if (!recvReply("250")) goto err;
+
+    sendCommand("MAIL FROM: %s\n", from);  // from
+    if (!recvReply("250")) goto err;
+    
+    sendCommand("RCPT TO: %s\n",   to);    // to
+    if (!recvReply("250")) goto err;
+    
+    sendCommand( "DATA\n",NULL);      // begin data
+    if (!recvReply("354")) goto err;
+
+    // next comes mail headers
+    sendCommand("From: %s\n",      from);    //from:
+    sendCommand("To: %s\n",        to);      //to:
+    sendCommand("Subject: %s\n",   subject); //subject:
+    sendCommand("\n",              NULL);
+    sendCommand("%s\n",            body);    // data
+    sendCommand(".\n",             NULL);    // end data
+    if (!recvReply("250")) goto err;
+    
+    sendCommand("QUIT\n",          NULL);    // terminate
+    if (!recvReply("221")) goto err;
+
+    CloseSocket();
+    return 0;
+err:
+    CloseSocket();
+    return 1;
+}/*sendMessage*/
+
+

@@ -1,0 +1,16 @@
+dir
+create temp.txt
+dir
+create temp1.txt
+dir
+attrib +h  temp.txt
+dir
+attrib -h  temp.txt
+dir
+mkdir programs
+dir
+del temp.txt
+dir
+rmdir programs
+dir
+exit

@@ -1,0 +1,60 @@
+0000      COPY     START   0
+          .
+          . This is the test source file for Pass 1
+          .
+          . Please include a printout of the intermdiate file and symbol table
+          .    generated using this source when turning in your assignment
+          .
+          . Note that we are not concerned with whether or not the
+          .    program is semantically correct or it makes any sense!
+          .
+0000      FIRST    STL     RETADR
+0003               LDB    #20
+0006      CLOOP1  +JSUB    RDREC
+000A               ADD     LENGTH
+000D               JEQ     ENDFIL
+0010               J       CLOOP             THIS IS A GOOD LABEL 
+0013      ENDFIL   FIX
+0014               CLEAR   A
+0016      LENGTH   RESW    32
+0076      RETADR   RESW    1
+0079      VALUE    WORD    9999
+007C               COMPR   B,S
+          . Watch out everybody
+007E              %LDA     DATA1
+********* ERROR: 	Invalid Operation Code Modifier %
+007E               LDA    %DATA1
+********* ERROR:  Invalid Operand Modifier %
+007E      2LOOP    J       FIRST             THIS IS A BAD LABEL 
+********* ERROR:  Invalid Label 2LOOP
+007E      ENDFIL   FLOAT 
+********* ERROR:  Duplicate Label ENDFIL
+007E               JSUB    BADCMT       THIS IS A BAD COMMENT
+********* ERROR:  Undetermined
+007E               NONO    0
+********* ERROR:  Invalid Operation Code NONO
+007E               J      @RETADR
+0081               YESYES  10
+********* ERROR:  Invalid Operation Code YESYES
+0081      CLOOP2   FIX
+          . Not bad!
+0082               STCH    LENGTH,X
+0085      CL       BYTE    C'STRINGER'
+008D      CLS      BYTE    C'HAL'
+0090      XL       BYTE    X'09AF'
+0092      XLS      BYTE    X'AC07C1'
+0095               CLEAR   S
+0097      NUM      EQU     500 
+0097      BUFFER   RESB    2048 
+0897      BUFEND   EQU     * 
+0897      MAXLEN   EQU     BUFEND-BUFFER 
+0897      NEGLEN   EQU     BUFFER-BUFEND 
+********* ERROR:  Illegal Expression in Operand Field 
+0897      CONS     EQU     1024 
+0897      BADEXP   EQU     NUM-BUFEND 
+********* ERROR:  Illegal Expression in Operand Field 
+0897      BUFE2    EQU     BUFEND 
+0897      MAXL2    EQU     MAXLEN 
+          . 
+          . Almost done 
+0897      RDREC    END     FIRST 

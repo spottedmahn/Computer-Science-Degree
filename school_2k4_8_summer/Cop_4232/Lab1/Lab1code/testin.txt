@@ -1,0 +1,5 @@
+Agent{ name: smith
+	age: 25 }Agent Student{ name: jones age: 19 PID: d555555 course:
+COP4232 }Student
+	Instructor{ name: workman age: 54 officeHrs: MW(12pm-2:45pm)
+}Instructor

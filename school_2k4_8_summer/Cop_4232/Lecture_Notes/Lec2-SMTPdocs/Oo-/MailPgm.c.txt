@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "MailMsg.h"
+
+char *remLF( char *buff ){
+      int i;
+      if( buff == NULL ) return NULL;
+      i = strlen(buff)-1;
+      if(i >= 0 && buff[i] == '\n') buff[i] = '\0';
+      return buff;
+}/*remLF*/
+
+int main() {
+      char  buff[2048];
+      char *userinfo;
+
+      printf( "Enter Client host: ");
+      fgets(buff,sizeof(buff),stdin);
+      remLF(buff);
+      userinfo = (char *)malloc( strlen(buff)+ 1);
+      strcpy(userinfo, buff);
+      printf( " Client: %s\n", userinfo);
+      setClient(userinfo);
+
+      printf( "Enter Server host: ");
+      fgets(buff,sizeof(buff),stdin);
+      remLF(buff);
+      userinfo = (char *)malloc( strlen(buff)+ 1);
+      strcpy(userinfo, buff);
+      printf( " Server: %s\n", userinfo);
+      setServer(userinfo);
+
+      printf( "Enter TO: ");
+      fgets(buff,sizeof(buff),stdin);
+      remLF(buff);
+      userinfo = (char *)malloc( strlen(buff)+ 1);
+      strcpy(userinfo, buff);
+      printf( " TO: %s\n", userinfo);
+      setTo(userinfo);
+
+      printf( "Enter FROM: ");
+      fgets(buff,sizeof(buff),stdin);
+      remLF(buff);
+      userinfo = (char *)malloc( strlen(buff)+ 1);
+      strcpy(userinfo, buff);
+      printf( " FROM: %s\n", userinfo);
+      setFrom(userinfo);
+
+      printf( "Enter SUBJECT: ");
+      fgets(buff,sizeof(buff),stdin);
+      remLF(buff);
+      userinfo = (char *)malloc( strlen(buff)+ 1);
+      strcpy(userinfo, buff);
+      printf( " SUBJECT: %s\n", userinfo);
+      setSubject(userinfo);
+
+      printf( "Enter TEXT: ");
+      fgets(buff,sizeof(buff),stdin);
+      remLF(buff);
+      userinfo = (char *)malloc( strlen(buff)+ 1);
+      strcpy(userinfo, buff);
+      printf( " TEXT: %s\n", userinfo);
+      setText(userinfo);
+      sendMessage();
+
+      return 0;
+
+}

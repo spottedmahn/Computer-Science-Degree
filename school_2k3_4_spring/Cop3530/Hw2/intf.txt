@@ -1,0 +1,9 @@
+70
+7
+CDs		3		200
+TV		40		600
+Necklace	1		80
+Food		5		10
+Painting	50		1000
+Plate		21		500
+CDPlayer	13		200

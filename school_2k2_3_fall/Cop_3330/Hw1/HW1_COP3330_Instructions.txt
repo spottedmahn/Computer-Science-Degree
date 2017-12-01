@@ -1,0 +1,15 @@
+This project requires you to do some simple io operations and math computations.
+
+First there may or may not be any command line parameters.  If there is a command line parameter it 
+will be a number, N, greater than 1 and less than 100.  Your job will be to read from standard input
+N lines.  On each line will be a positive number, A.  You should compute A factorial, A!, and output
+one result per line.   If there are no command line parameters, or once you have read in the N 
+numbers you should do the 2nd part of the project.  This part will require that you again read in
+lines one at a time from standard input.  Your program should stop once the string "quit" is 
+entered on a line by itself.   If the line is anything other than "quit" you should output "valid
+word" if the word is valid.  For our purposes a word is valid if the sum of the ASCII values of
+its characters is divisible by 3 or 5 or 7 or 11 or 13.  If the word is not valid then print out the string
+"not valid"   In either case read the next input line from the standard input stream and
+continue processing until the quit command has been reached.
+
+

@@ -1,0 +1,13 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "Cop3330_HW2", "Cop3330_HW2.vjp", "{CACEF2F8-B3AC-458D-BD2C-120A52E8E74F}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {CACEF2F8-B3AC-458D-BD2C-120A52E8E74F}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {CACEF2F8-B3AC-458D-BD2C-120A52E8E74F}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

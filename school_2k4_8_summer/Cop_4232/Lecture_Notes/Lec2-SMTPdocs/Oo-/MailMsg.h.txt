@@ -1,0 +1,14 @@
+#ifndef _MAILMSG
+#define _MAILMSG
+
+extern void setClient ( char *);
+extern void setFrom   ( char *);
+extern void setServer ( char *);
+extern void setSubject( char *);
+extern void setTo     ( char *);
+extern void setText   ( char *);
+extern int  sendMessage();
+
+#endif
+
+

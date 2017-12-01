@@ -1,0 +1,5 @@
+(defun add(num n)
+	(cond ((zerop n) num)
+	      (t (add (1+ num) (1- n)))
+	)
+)

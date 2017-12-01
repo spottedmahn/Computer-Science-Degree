@@ -1,0 +1,13 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "MIS", "MIS.vjp", "{7BC6F687-3E14-488D-BBBD-1470B094FED7}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {7BC6F687-3E14-488D-BBBD-1470B094FED7}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {7BC6F687-3E14-488D-BBBD-1470B094FED7}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

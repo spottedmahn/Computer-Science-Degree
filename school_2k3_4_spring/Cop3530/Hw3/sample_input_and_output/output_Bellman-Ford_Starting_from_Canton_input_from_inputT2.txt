@@ -1,0 +1,19 @@
+Source is Canton
+Miami	87
+Orlando	81
+Tampa	85
+Jacksonville	88
+Naples	103
+Sanford	95
+Deltona	84
+Ocala	193
+Panama	178
+NewYork	102
+LA	136
+ATL	101
+Detroit	51
+Oviedo	24
+Chicago	61
+Denver	80
+SanJuan	94
+Lansing	4

@@ -1,0 +1,26 @@
+
+	SYMBOL TABLE
+
+Hash Index	Name	Value	Type
+   7		CONS	400	A
+   15		COPY	0	R
+   26		CLS	30	R
+   30		CLOOP1	6	R
+   31		CLOOP2	24	R
+   34		ENDFIL	F	R
+   36		BUFEND	3D	R
+   40		NUM	1F4	A
+    		BUFE2	3D	R
+   41		NEGLEN	7C3	A
+   42		BUFFER	800	R
+   43		CL	28	R
+   47		XLS	35	R
+   50		LENGTH	12	R
+    		RETADR	15	R
+   53		MAXLEN	FFFFF83D	A
+   56		MAXL2	FFFFF83D	A
+   64		2LOOP	1D	R
+    		XL	33	R
+   68		RDREC	3D	R
+   83		S	21	R
+   92		FIRST	0	R

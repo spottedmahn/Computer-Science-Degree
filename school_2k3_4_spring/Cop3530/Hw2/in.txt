@@ -1,0 +1,13 @@
+12
+ChessClub	300	450
+Drama		130	600
+Poetry		400	500
+TV		100	800
+Soccer		200	310
+NatureClub	550	780
+QuizBowl	790	940
+Interact	600	850
+Party		700	999
+Ball		759	1000
+bbb 760 800
+bbc 760 900

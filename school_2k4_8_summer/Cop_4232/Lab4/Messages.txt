@@ -1,0 +1,111 @@
+The following messages can be sent by useing the Message base class
+
+each message includes a description and a handle
+then will be ecapsulated in an event class which will also include
+a timeDelay, sendr and recvr
+
+
+Description - "Time of Arrival"
+Handle - 5 
+Sendr - Student
+Recvr - Student
+Delay - Sendr.TOA
+Utilization - Sets the variable Student.isPresent to true
+
+Description - "Finished Prepping"
+Handle - 5
+Sendr - Instructor
+Recvr - Instructor
+Delay - Sendr.prepDelay
+Utilization - informs the Instructor to begin the lecture (sends out begin of concept message)
+
+Description - "End of Lecture"
+Handle - 6
+Sendr - Instructor
+Recvr - Instructor
+Delay - classLength / 2
+Utilization - Informs the Instructor to pass out the quiz to each student
+
+Description - "End of Fact" 
+Handle - 0
+Sendr - Instructor/Student
+Recvr - Student/Instructor
+Delay - 0
+Utilization - Lets Instructor move on to next fact (by sending out example messages).  Lets Student queue a question if needed
+
+Description - "End of Concept"
+Handle - 1
+Sendr - Instructor
+Recvr - Student/Instructor
+Delay - 0
+Utilization - Informs Instructor to begin the q&a period.  Lets Student ask their questions.
+
+Description - "Discussion Check"
+Handle - 7 
+Sendr - Instructor
+Recvr - Instructor
+Delay - Discussion * 1/4
+Utilization - Instructor sees if a question has been asked, determines the time delay for the next beginofconcept message.
+
+Description - "End of Exam"
+Handle - 6
+Sendr - Instructor
+Recvr - Student
+Delay - classLength / 2
+Utilization - Makes Student turn in their quiz and leave the classroom
+
+Description - "Anouncement"
+Handle - 7
+Sendr - Instructor
+Recvr - Student
+Delay - ?????
+Utilization - Informs the student of how much time is left. 
+
+
+Each of these messages will need their own class derived from the base class.
+New fields are denoted by +
+
+Description - "Begin of Concept"
+Handle - 2
+Sendr - Instructor
+Recvr - Instructor/Student
+Delay - 0 or Discussion * 3/4
++ int conceptNumber
+Utilization - Updates currConcept variable for both Student and Instructor. Instructor will then send out example messages.
+
+Description - "Example"
+Handle - 8
+Sendr - Instructor
+Recvr - Student
+Delay - Fact.exDelay
++ string factName
++ string conceptName
++ double difficulty
+Utilization - Student updates their understanding.
+
+Description - "Question"
+Handle - 8
+Sendr - Student
+Recvr - Instructor
+Delay - ???
++ string factName
++ conceptNum
+Utilization - Instructor will repeat examples from the fact specified.
+
+Description - "Quiz"
+Handle - 3
+Sendr - Teacher/Student
+Recvr - Student/Teacher
+Delay - 0 - might change
++ Quiz quiz
+Utilization - Student or Instructor recieves quiz.
+
+Description - "Quiz Question"
+Handle - 4
+Sendr - Student/Teacher
+Recvr - Teacher/Student
+Delay - Sendr.ansrDelay
++ Question ques
++ int questionNumber
+Utilization - Student answers question. Instructor grades question.
+

@@ -1,0 +1,2 @@
+The initial investment was $10000.00.  The total amount accumulated after 60 years, if $10000.00 is allowed to compound with an interest of 10.00%, comes to $3044821.75
+The total amount accumulated after 61 years, if $10000.00 is allowed to compound with an interest of 10.00%, comes to $3349304.00

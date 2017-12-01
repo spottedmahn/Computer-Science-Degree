@@ -1,0 +1,20 @@
+First-Fit
+Allocate Process 1 20
+Allocate Process 2 10
+Allocate Process 1 50
+Allocate Process 3 15
+Deallocate Process 1
+Allocate Process 2 25
+Deallocate Process 2
+Allocate Process 1 20
+Allocate Process 4 40
+Allocate Process 4 20
+Allocate Process 5 30
+Allocate Process 2 44
+Allocate Process 1 40
+Allocate Process 1 68
+Deallocate Process 3
+Deallocate Process 1
+Deallocate Process 5
+Deallocate Process 4
+Deallocate Process 2

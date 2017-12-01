@@ -1,0 +1,13 @@
+Note:  Lisp programmers change the () to [].
+Note:  Everybody - or, and, not - your symbol choice
+Note:  Everybody - get rid of these three lines!
+
+( a + b ) * ( c - d )
+
+a + b + c * ( d - e ) / f
+
+a * b * c - d
+
+a AND b OR NOT c
+
+NOT ( a AND b )

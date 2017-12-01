@@ -1,0 +1,13 @@
+notes:
+
+When reading in quiz instance, name is not read in.  
+When reading in question instance, answer is not read in.
+Instructor also needs quiz field.
+The first field of student and instructor is agentid, not name.
+when reading in student instance, score is not read in.
+Instructor needs a constructor similar to student:  Instructor(ifstream fin)
+Fix Capital letter difference in sample input and in get methods
+Add field currConcept to Agent class (not instructor class)
+0 < Understanding < 1 - fact not understood
+Understanding >= 1 - fact is understood
+Understanding = comprehension - difficulty   (for each example)

@@ -1,0 +1,12 @@
+Conversation{
+	#students:  2
+	Student{  agentid:  Betty
+		  questdelay:  5
+		  ansrdelay:   2
+	}Student
+	Student{  agentid:  Bart
+		  questdelay:  3
+		  ansrdelay:   4
+	}Student
+}Conversation
+

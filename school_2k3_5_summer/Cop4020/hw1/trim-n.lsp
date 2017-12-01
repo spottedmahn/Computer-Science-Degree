@@ -1,0 +1,5 @@
+(defun trim-n(n listIn)
+	(cond ((zerop n) listIn)
+	      (t(trim-n (- n 1) (rest listIn)))
+	)
+)

@@ -1,0 +1,5 @@
+10 10 10 10 10 10 
+There are 6 evens, which also includes 0 zeros
+The number of odd numbers is: 0
+Sum is 60
+Average is 10

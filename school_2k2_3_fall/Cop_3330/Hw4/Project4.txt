@@ -1,0 +1,41 @@
+In project four you will write two classes.  
+
+THe first class will be the Matrix class, thus you will have one file called
+Matrix.java and another file called HW4.java
+
+In the matrix class you must provide the functionality of matrix addition,
+scalar multiplication, and full matrix multiplication.  The underlying
+data type should be double(each array cell should be a double.  
+OF course the data in Matrix.java must be private.
+
+In the HW4.java file you will read from a file to get commands for the 
+program.  In HW4 you will need to create a vector of Matrices.  Thus something
+like Vector matrices = new Vector();  will initialize the vector of Matrices.
+Each vector position will hold a matrix.  
+You will read commands from the file entered on the command line.  The 
+second command line parameter will be the file to output to.
+
+The file will have the following format
+matrix N M  -- this command will signify that you are to create a matrix
+with the specified number of dimensions.  Each of the next N lines will
+have M double values, which are the elements of the matrix.
+
+add A1 A2 A3... will signify that you are to add the matrices with indices A1,
+A2,...
+(zero based) together.  The resulting matrix should be stored as a new entry
+in the Vector.  The add command will have at least two matrices to add together.
+
+scalar A d --signifies to multiply the matrix at location A by the scalar d,
+and the result should be stored as a new entry in the vector of matrices.
+
+mult A1 A2 A3... signifies that you should multiply the specified matrices 
+together.  Store the resulting matrix as a new entry in the vector. The
+mult command will have at least two matrices to add together.
+
+print A, signifies to print the matrix at location A. A will be a valid index.
+You should print this matrix to the output file.
+
+Notice that add or mult could fail, if the dimensions of the matrices are
+not appropriate.  If an operation fails then you should print a line to the 
+file which says which operation failed.  When an operation fails a new matrix
+should not be added to the vector of matrices.
